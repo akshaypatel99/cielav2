@@ -1,0 +1,15 @@
+[Settings]
+ID='750283e2-09ef-4ffc-98ce-b67bfec5305e'
+
+[build]
+command = 'npm run build'
+functions = 'functions'
+publish = 'build'
+
+[functions]
+  directory = "functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
