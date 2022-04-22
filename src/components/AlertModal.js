@@ -76,11 +76,13 @@ const CardShadow = styled.div`
 `;
 
 const StyledAlert = styled.div`
+	max-width: 380px;
 	width: 90%;
+	max-height: 95%;
 	padding: 0.5rem;
 	position: absolute;
 	margin: 20vh auto 0;
-	z-index: 10;
+	z-index: 5;
 	display: flex;
 	justify-content: center;
 `;

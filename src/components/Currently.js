@@ -21,7 +21,7 @@ const Currently = () => {
 
 	return (
 		<StyledCurrently>
-			{!showAlert && (
+			{/* {!showAlert && (
 				<AlertIcon
 					size={22}
 					aria-label='open weather warning'
@@ -54,7 +54,7 @@ const Currently = () => {
 					showAlert={showAlert}
 					setShowAlert={setShowAlert}
 				/>
-			)}
+			)} */}
 			<CurrentlyDescription>
 				<img
 					src={convertIcon(current.weather[0].icon)}
@@ -96,7 +96,7 @@ export default Currently;
 
 const StyledCurrently = styled.section`
 	width: 100%;
-	margin: 2rem auto;
+	margin: 0 auto 1rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -219,5 +219,5 @@ const CloseIcon = styled(FiX)`
 	color: white;
 	margin-right: 1rem;
 	cursor: pointer;
-	z-index: 20;
+	/* z-index: 20; */
 `;

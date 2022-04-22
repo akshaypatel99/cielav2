@@ -210,6 +210,7 @@ const CardShadow = styled.div`
 `;
 
 const DayDetail = styled.div`
+	max-width: 380px;
 	width: 90%;
 	max-height: 95%;
 	padding: 1.5rem;
@@ -218,6 +219,7 @@ const DayDetail = styled.div`
 	top: 50%;
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
+	overflow-y: scroll;
 	z-index: 10;
 	background-image: linear-gradient(
 		140deg,

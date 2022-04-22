@@ -138,11 +138,12 @@ const CardShadow = styled.div`
 `;
 
 const StyledSearch = styled.div`
+	max-width: 380px;
 	width: 90%;
-	height: 5rem;
+	height: 10rem;
 	position: absolute;
-	margin: 30vh auto 0;
-	z-index: 10;
+	margin: 20vh auto 0;
+	z-index: 5;
 `;
 
 const SearchOptions = styled.div`

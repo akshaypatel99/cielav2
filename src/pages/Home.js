@@ -14,6 +14,7 @@ import DailyDetail from '../components/DailyDetail';
 import HourlyDetail from '../components/HourlyDetail';
 import SearchModal from '../components/SearchModal';
 import Loading from '../components/Loading';
+import ModalOptions from '../components/ModalOptions';
 
 export default function Home() {
 	const [showSearch, setShowSearch] = useState(true);
@@ -38,7 +39,7 @@ export default function Home() {
 			{pathDiv === 'hourly' && pathId && <HourlyDetail pathId={pathId} />}
 
 			<Header />
-			{status === 'resolved' && !showSearchModal && (
+			{/* {status === 'resolved' && !showSearchModal && (
 				<SearchIcon
 					tabIndex='2'
 					size={22}
@@ -69,7 +70,7 @@ export default function Home() {
 					showSearchModal={showSearchModal}
 					setShowSearchModal={setShowSearchModal}
 				/>
-			)}
+			)} */}
 
 			<Search showSearch={showSearch} />
 			<Results>
@@ -77,6 +78,7 @@ export default function Home() {
 				{status === 'rejected' && error && <ErrorMessage error={error} />}
 				{status === 'resolved' && weather && (
 					<>
+						<ModalOptions />
 						<Currently />
 						<Hourly />
 						<Daily />
@@ -121,7 +123,7 @@ const CloseIcon = styled(FiX)`
 	color: white;
 	margin-right: 1rem;
 	cursor: pointer;
-	z-index: 20;
+	/* z-index: 20; */
 `;
 
 const Results = styled.div`

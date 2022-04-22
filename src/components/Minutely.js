@@ -105,10 +105,10 @@ const Minutely = () => {
 
 export default Minutely;
 
-const StyledMinutely = styled.div`
+const StyledMinutely = styled.section`
 	width: 100%;
 	margin: 1rem auto;
-	padding-bottom: 1rem;
+	padding-bottom: 3rem;
 
 	p {
 		font-weight: 400;

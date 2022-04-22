@@ -11,7 +11,7 @@ export default function ErrorMessage({ error }) {
 
 const StyledErrorMessage = styled.div`
 	width: 100%;
-	margin: 0 auto;
+	margin: 5rem auto;
 
 	h4 {
 		margin-bottom: 1rem;
