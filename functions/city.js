@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const fetchLatlong = async (city) => {
+const fetchLatLong = async (city) => {
 	let lat = '';
 	let lng = '';
 
@@ -24,7 +24,7 @@ exports.handler = async function (event, context) {
 		const { city } = JSON.parse(event.body);
 		let weather = {};
 		const encodedCity = encodeURI(city);
-		const { lat, lon } = await fetchLatlong(encodedCity);
+		const { lat, lon } = await fetchLatLong(encodedCity);
 		const response = await axios.get(
 			`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${process.env.REACT_OPENWEATHER_APP_ID}`
 		);
@@ -32,6 +32,7 @@ exports.handler = async function (event, context) {
 		weather = {
 			timezone: response.data.timezone.split('/'),
 			timezoneOffset: response.data.timezone_offset,
+			location: city,
 			// current = Object
 			current: response.data.current,
 			// daily && hourly && minutely = Array
@@ -42,7 +43,7 @@ exports.handler = async function (event, context) {
 			all: response.data,
 		};
 
-		console.log(weather);
+		console.log('city NF', weather);
 
 		return {
 			statusCode: 200,

@@ -20,11 +20,6 @@ export const rainfall = (amount) => {
 
 export const rainfallKey = [
 	{
-		color: '#d8f6fc',
-		amount: '< 0.01',
-		description: 'No rain',
-	},
-	{
 		color: '#0055de',
 		amount: '0.01-0.5',
 		description: 'Drizzle',
@@ -32,36 +27,36 @@ export const rainfallKey = [
 	{
 		color: '#007add',
 		amount: '0.5-1',
-		description: 'Light rain',
+		description: 'Light',
 	},
 	{
 		color: '#00b320',
 		amount: '1-2',
-		description: 'Light-Moderate rain',
+		description: 'Light-Moderate',
 	},
 	{
 		color: '#fecb00',
 		amount: '2-4',
-		description: 'Moderate rain',
+		description: 'Moderate',
 	},
 	{
 		color: '#fe9800',
 		amount: '4-8',
-		description: 'Moderate-Heavy rain',
+		description: 'Moderate-Heavy',
 	},
 	{
 		color: '#de2316',
 		amount: '8-16',
-		description: 'Heavy rain',
+		description: 'Heavy',
 	},
 	{
 		color: '#fd4fbb',
 		amount: '16-32',
-		description: 'Very Heavy rain',
+		description: 'Very Heavy',
 	},
 	{
 		color: '#a358ff',
 		amount: '> 32',
-		description: 'Torrential rain',
+		description: 'Torrential',
 	},
 ];

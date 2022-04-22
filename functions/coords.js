@@ -31,7 +31,7 @@ exports.handler = async function (event, context) {
 		weather = {
 			timezone: response.data.timezone.split('/'),
 			timezoneOffset: response.data.timezone_offset,
-			address: address,
+			location: address,
 			// current = Object
 			current: response.data.current,
 			// daily && hourly && minutely = Array
@@ -42,7 +42,7 @@ exports.handler = async function (event, context) {
 			all: response.data,
 		};
 
-		console.log(weather);
+		console.log('coords NF', weather);
 
 		return {
 			statusCode: 200,
