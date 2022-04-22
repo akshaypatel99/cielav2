@@ -219,5 +219,5 @@ const CloseIcon = styled(FiX)`
 	color: white;
 	margin-right: 1rem;
 	cursor: pointer;
-	z-index: 50;
+	z-index: 20;
 `;

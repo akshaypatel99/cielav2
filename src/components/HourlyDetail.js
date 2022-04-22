@@ -212,14 +212,14 @@ const HourlyDetailMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 1rem;
+	margin-top: 0.5rem;
 `;
 
 const HourlyDetailDay = styled.div`
 	margin-bottom: 1.5rem;
 
 	h1 {
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 	}
 `;
 
@@ -233,7 +233,6 @@ const HourlyDetailDescription = styled.div`
 		font-weight: 400;
 		font-family: 'SofiaProRegular';
 		font-size: 1.125rem;
-		margin-top: 0.25rem;
 	}
 
 	img {
@@ -295,5 +294,5 @@ const HourlyDetailCardTitle = styled.h5`
 `;
 
 const HourlyDetailCardContent = styled.p`
-	font-size: 1.1rem;
+	font-size: 1rem;
 `;

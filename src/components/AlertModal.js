@@ -66,6 +66,9 @@ const CardShadow = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	::-webkit-scrollbar {
 		display: none;
@@ -73,13 +76,13 @@ const CardShadow = styled.div`
 `;
 
 const StyledAlert = styled.div`
+	width: 90%;
 	padding: 0.5rem;
 	position: absolute;
-	margin: auto;
-	top: 25%;
-	left: 50%;
-	transform: translateY(-50%) translateX(-50%);
+	margin: 20vh auto 0;
 	z-index: 10;
+	display: flex;
+	justify-content: center;
 `;
 
 const Message = styled.div`

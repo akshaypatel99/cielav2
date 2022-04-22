@@ -211,7 +211,7 @@ const CardShadow = styled.div`
 
 const DayDetail = styled.div`
 	width: 90%;
-	max-height: 90%;
+	max-height: 95%;
 	padding: 1.5rem;
 	position: absolute;
 	margin: auto;
@@ -250,14 +250,14 @@ const DailyDetailMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 1rem;
+	margin-top: 0.5rem;
 `;
 
 const DailyDetailDay = styled.div`
 	margin-bottom: 1.5rem;
 
 	h1 {
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 	}
 `;
 
@@ -271,7 +271,6 @@ const DailyDetailDescription = styled.div`
 		font-weight: 400;
 		font-family: 'SofiaProRegular';
 		font-size: 1.125rem;
-		margin-top: 0.25rem;
 	}
 
 	img {
@@ -281,9 +280,10 @@ const DailyDetailDescription = styled.div`
 `;
 
 const DailyDetailTemp = styled.div`
+	width: 160px;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	align-items: baseline;
+	justify-content: space-around;
 	margin-top: 1rem;
 
 	h3,
@@ -296,7 +296,6 @@ const DailyDetailTemp = styled.div`
 
 	h3 {
 		font-size: 3.5rem;
-		margin-bottom: 0.25rem;
 
 		span {
 			font-size: 1.5rem;
@@ -308,6 +307,7 @@ const DailyDetailTemp = styled.div`
 
 	h4 {
 		font-size: 2.5rem;
+		font-family: 'SofiaProUltraLight';
 
 		span {
 			font-size: 1.25rem;
@@ -326,8 +326,8 @@ const DailyDetailGrid = styled.div`
 	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	grid-column-gap: 2.5rem;
 	grid-row-gap: 1rem;
-	margin-top: 2.5rem;
-	margin-bottom: 2.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
 `;
 
 const DailyDetailCard = styled.div`
@@ -348,7 +348,7 @@ const DailyDetailCardTitle = styled.h5`
 `;
 
 const DailyDetailCardContent = styled.p`
-	font-size: 1.1rem;
+	font-size: 1rem;
 `;
 
 const DailyDetailTempTable = styled.table`

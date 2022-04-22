@@ -4,7 +4,7 @@ import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
 
-const Search = () => {
+const Search = ({ showSearch }) => {
 	const [showSearchInput, setShowSearchInput] = useState(false);
 	const [city, setCity] = useState('');
 	const inputRef = useRef();
@@ -32,7 +32,7 @@ const Search = () => {
 	}, [showSearchInput]);
 
 	return (
-		<StyledSearch>
+		<StyledSearch showSearch={showSearch}>
 			<SearchOptions>
 				<SearchOption
 					tabIndex='1'
@@ -102,16 +102,10 @@ const Search = () => {
 export default Search;
 
 const StyledSearch = styled.div`
+	display: ${(props) => (props.showSearch ? 'block' : 'none')};
 	width: 90%;
 	height: 5rem;
 	margin: 3rem auto;
-
-	.vl {
-		background-color: hsla(0, 0%, 100%, 0.2);
-		width: 1px;
-		height: 100%;
-		margin: 0 2rem;
-	}
 `;
 
 const SearchOptions = styled.div`
@@ -121,6 +115,13 @@ const SearchOptions = styled.div`
 	align-items: center;
 	justify-content: space-evenly;
 	margin: 0 auto;
+
+	.vl {
+		background-color: hsla(0, 0%, 100%, 0.2);
+		width: 1px;
+		height: 100%;
+		margin: 0 2rem;
+	}
 `;
 
 const SearchOption = styled.div`

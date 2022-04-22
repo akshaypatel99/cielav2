@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
+import ErrorMessage from './Error';
+import Loading from './Loading';
 
 const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 	const [showSearchInput, setShowSearchInput] = useState(false);
 	const [city, setCity] = useState('');
+	const { weatherState, dispatch } = useWeather();
+	const { status, error } = weatherState;
 	const inputRef = useRef();
-
-	const { dispatch } = useWeather();
 
 	const handleCoords = (e) => {
 		e.preventDefault();
@@ -108,6 +110,8 @@ const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 						<p>For best results, enter postcode, city & country.</p>
 					</SearchInput>
 				)}
+				{status === 'loading' && <Loading />}
+				{status === 'rejected' && error && <ErrorMessage error={error} />}
 			</StyledSearch>
 		</CardShadow>
 	);
@@ -124,6 +128,9 @@ const CardShadow = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	::-webkit-scrollbar {
 		display: none;
@@ -134,18 +141,8 @@ const StyledSearch = styled.div`
 	width: 90%;
 	height: 5rem;
 	position: absolute;
-	margin: auto;
-	top: 25%;
-	left: 50%;
-	transform: translateY(-50%) translateX(-50%);
+	margin: 30vh auto 0;
 	z-index: 10;
-
-	.vl {
-		background-color: hsla(0, 0%, 100%, 0.2);
-		width: 1px;
-		height: 100%;
-		margin: 0 2rem;
-	}
 `;
 
 const SearchOptions = styled.div`
@@ -155,6 +152,13 @@ const SearchOptions = styled.div`
 	align-items: center;
 	justify-content: space-evenly;
 	margin: 0 auto;
+
+	.vl {
+		background-color: hsla(0, 0%, 100%, 0.2);
+		width: 1px;
+		height: 100%;
+		margin: 0 2rem;
+	}
 `;
 
 const SearchOption = styled.div`

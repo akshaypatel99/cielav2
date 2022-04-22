@@ -72,6 +72,7 @@ const DailyContainer = styled.div`
 const DailySummary = styled.div`
 	width: 100%;
 	min-height: 1.5rem;
+	margin-bottom: 0.25rem;
 	display: flex;
 	flex-direction: column;
 	transition: all 0.2s ease-out;
