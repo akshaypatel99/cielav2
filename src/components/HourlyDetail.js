@@ -60,7 +60,7 @@ const HourlyDetail = ({ pathId }) => {
 			<HourDetail>
 				<HourlyDetailClose
 					ref={closeRef}
-					tabIndex='5'
+					tabIndex='6'
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
 							navigate('/');

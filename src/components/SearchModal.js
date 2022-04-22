@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
 
-const SearchModal = () => {
+const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 	const [showSearchInput, setShowSearchInput] = React.useState(false);
 	const [city, setCity] = React.useState('');
 
@@ -24,12 +24,26 @@ const SearchModal = () => {
 		}
 	};
 
+	useEffect(() => {
+		function onKeyDown(event) {
+			const escape = event.key === 'Escape';
+			if (escape) {
+				setShowSearchModal(!showSearchModal);
+			}
+		}
+		document.body.addEventListener('keydown', onKeyDown);
+
+		return () => {
+			document.body.removeEventListener('keydown', onKeyDown);
+		};
+	}, [setShowSearchModal, showSearchModal]);
+
 	return (
 		<CardShadow>
 			<StyledSearch>
 				<SearchOptions>
 					<SearchOption
-						tabIndex='1'
+						tabIndex='3'
 						onClick={handleCoords}
 						onKeyDown={(event) => {
 							if (event.key === 'Enter') {
@@ -44,7 +58,7 @@ const SearchModal = () => {
 					<div className='vl'></div>
 
 					<SearchOption
-						tabIndex='2'
+						tabIndex='4'
 						onClick={() => setShowSearchInput(!showSearchInput)}
 						onKeyUp={(event) => {
 							if (event.key === 'Enter') {
@@ -65,7 +79,7 @@ const SearchModal = () => {
 								placeholder='Enter city & country'
 								value={city}
 								onChange={(event) => setCity(event.target.value)}
-								tabIndex='3'
+								tabIndex='5'
 								onKeyDown={(event) => {
 									if (event.key === 'Escape') {
 										setShowSearchInput(!showSearchInput);

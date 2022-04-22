@@ -59,7 +59,7 @@ const DailyDetail = ({ pathId }) => {
 				<>
 					<DailyDetailClose
 						ref={closeRef}
-						tabIndex='5'
+						tabIndex='6'
 						onKeyDown={(event) => {
 							if (event.key === 'Enter') {
 								navigate('/');

@@ -11,7 +11,7 @@ import {
 	FiX,
 } from 'react-icons/fi';
 import { formatTime } from '../utils/convertUnixTime';
-import Alert from './Alert';
+import AlertModal from './AlertModal';
 
 const Currently = () => {
 	const [showAlert, setShowAlert] = useState(false);
@@ -24,8 +24,8 @@ const Currently = () => {
 			{!showAlert && (
 				<AlertIcon
 					size={18}
-					aria-label='weather warning'
-					tabIndex='4'
+					aria-label='open weather warning'
+					tabIndex='1'
 					onClick={() => setShowAlert(!showAlert)}
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
@@ -38,6 +38,7 @@ const Currently = () => {
 				<CloseIcon
 					size={18}
 					aria-label='close weather warning'
+					tabIndex='1'
 					onClick={() => setShowAlert(!showAlert)}
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
@@ -46,7 +47,14 @@ const Currently = () => {
 					}}
 				/>
 			)}
-			{showAlert && <Alert alerts={alerts} timezoneOffset={timezoneOffset} />}
+			{showAlert && (
+				<AlertModal
+					alerts={alerts}
+					timezoneOffset={timezoneOffset}
+					showAlert={showAlert}
+					setShowAlert={setShowAlert}
+				/>
+			)}
 			<CurrentlyDescription>
 				<img
 					src={convertIcon(current.weather[0].icon)}

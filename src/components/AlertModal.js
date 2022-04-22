@@ -1,7 +1,22 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { formatDayDate } from '../utils/convertUnixTime';
 
-const Alert = ({ alerts, timezoneOffset }) => {
+const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
+	useEffect(() => {
+		function onKeyDown(event) {
+			const escape = event.key === 'Escape';
+			if (escape) {
+				setShowAlert(!showAlert);
+			}
+		}
+		document.body.addEventListener('keydown', onKeyDown);
+
+		return () => {
+			document.body.removeEventListener('keydown', onKeyDown);
+		};
+	}, [setShowAlert, showAlert]);
+
 	let message;
 
 	if (Array.isArray(alerts)) {
@@ -40,7 +55,7 @@ const Alert = ({ alerts, timezoneOffset }) => {
 	);
 };
 
-export default Alert;
+export default AlertModal;
 
 const CardShadow = styled.div`
 	width: 100%;

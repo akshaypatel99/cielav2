@@ -39,17 +39,36 @@ export default function Home() {
 			<Header />
 			{status === 'resolved' && !showSearchModal && (
 				<SearchIcon
+					tabIndex='2'
 					size={18}
 					onClick={() => setShowSearchModal(!showSearchModal)}
+					onKeyUp={(event) => {
+						if (event.key === 'Enter') {
+							setShowSearchModal(!showSearchModal);
+						}
+					}}
+					aria-label='open search modal'
 				/>
 			)}
 			{showSearchModal && (
 				<CloseIcon
+					tabIndex='2'
 					size={18}
 					onClick={() => setShowSearchModal(!showSearchModal)}
+					onKeyUp={(event) => {
+						if (event.key === 'Enter') {
+							setShowSearchModal(!showSearchModal);
+						}
+					}}
+					aria-label='close search modal'
 				/>
 			)}
-			{showSearchModal && <SearchModal />}
+			{showSearchModal && (
+				<SearchModal
+					showSearchModal={showSearchModal}
+					setShowSearchModal={setShowSearchModal}
+				/>
+			)}
 
 			{showSearch && <Search />}
 			<Results>
