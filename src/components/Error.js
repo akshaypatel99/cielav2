@@ -1,8 +1,19 @@
+import styled from 'styled-components';
+
 export default function ErrorMessage({ error }) {
 	return (
-		<div>
-			<h1>Error</h1>
+		<StyledErrorMessage>
+			<h4>Error:</h4>
 			<p>{error.message}</p>
-		</div>
+		</StyledErrorMessage>
 	);
 }
+
+const StyledErrorMessage = styled.div`
+	width: 100%;
+	margin: 0 auto;
+
+	h4 {
+		margin-bottom: 1rem;
+	}
+`;
