@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
 
 const Search = () => {
-	const [showSearchInput, setShowSearchInput] = React.useState(false);
-	const [city, setCity] = React.useState('');
+	const [showSearchInput, setShowSearchInput] = useState(false);
+	const [city, setCity] = useState('');
+	const inputRef = useRef();
 
 	const { dispatch } = useWeather();
 
@@ -23,6 +24,12 @@ const Search = () => {
 			dispatch({ type: 'ERROR', error: 'Please enter a city' });
 		}
 	};
+
+	useEffect(() => {
+		if (showSearchInput) {
+			inputRef.current.focus();
+		}
+	}, [showSearchInput]);
 
 	return (
 		<StyledSearch>
@@ -64,6 +71,7 @@ const Search = () => {
 							placeholder='Enter city & country'
 							value={city}
 							onChange={(event) => setCity(event.target.value)}
+							ref={inputRef}
 							tabIndex='3'
 							onKeyDown={(event) => {
 								if (event.key === 'Escape') {

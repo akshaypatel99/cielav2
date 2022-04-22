@@ -43,7 +43,6 @@ const StyledHourly = styled.section`
 
 const HourlyContainer = styled.div`
 	display: flex;
-	overflow-y: hidden;
 	overflow-x: scroll;
 	width: 100%;
 	margin: 0 auto;

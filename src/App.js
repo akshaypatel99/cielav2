@@ -19,7 +19,7 @@ export default App;
 
 const StyledApp = styled.div`
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	background-image: linear-gradient(300deg, #e0c3fc 0%, #8ec5fc 100%);

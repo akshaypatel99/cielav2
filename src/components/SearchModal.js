@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
 
 const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
-	const [showSearchInput, setShowSearchInput] = React.useState(false);
-	const [city, setCity] = React.useState('');
+	const [showSearchInput, setShowSearchInput] = useState(false);
+	const [city, setCity] = useState('');
+	const inputRef = useRef();
 
 	const { dispatch } = useWeather();
 
@@ -25,6 +26,10 @@ const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 	};
 
 	useEffect(() => {
+		if (showSearchInput) {
+			inputRef.current.focus();
+		}
+
 		function onKeyDown(event) {
 			const escape = event.key === 'Escape';
 			if (escape) {
@@ -36,7 +41,7 @@ const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 		return () => {
 			document.body.removeEventListener('keydown', onKeyDown);
 		};
-	}, [setShowSearchModal, showSearchModal]);
+	}, [showSearchInput, setShowSearchModal, showSearchModal]);
 
 	return (
 		<CardShadow>
@@ -79,6 +84,7 @@ const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
 								placeholder='Enter city & country'
 								value={city}
 								onChange={(event) => setCity(event.target.value)}
+								ref={inputRef}
 								tabIndex='5'
 								onKeyDown={(event) => {
 									if (event.key === 'Escape') {

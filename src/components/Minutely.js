@@ -143,7 +143,6 @@ const Scale = styled.div`
 const Chart = styled.div`
 	width: 100%;
 	display: flex;
-	overflow-y: hidden;
 	overflow-x: scroll;
 	margin: 0.25rem 0;
 `;

@@ -89,7 +89,7 @@ export default function Home() {
 
 const StyledHome = styled.div`
 	width: 420px;
-	min-height: 900px;
+	height: 100%;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -134,5 +134,5 @@ const Results = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 `;
