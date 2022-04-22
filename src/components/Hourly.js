@@ -74,6 +74,7 @@ const HourlySummary = styled.div`
 
 	h5 {
 		font-weight: 400;
+		font-family: 'SofiaProRegular';
 		color: ${({ newDay }) => (newDay ? '#ffcc00' : '#fff')};
 	}
 `;

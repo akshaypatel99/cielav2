@@ -112,6 +112,7 @@ const StyledMinutely = styled.div`
 
 	p {
 		font-weight: 400;
+		font-family: 'SofiaProRegular';
 		font-size: 0.9rem;
 	}
 `;

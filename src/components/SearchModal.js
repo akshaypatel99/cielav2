@@ -194,6 +194,7 @@ const SearchInput = styled.div`
 		text-transform: capitalize;
 		font-size: 1rem;
 		font-weight: 400;
+		font-family: 'SofiaProRegular';
 		margin-top: 0.125rem;
 		padding: 0.25rem 0.5rem;
 		width: 100%;
@@ -216,6 +217,7 @@ const SearchInput = styled.div`
 		text-align: center;
 		font-size: 0.8rem;
 		font-weight: 200;
+		font-family: 'SofiaProExtraLight';
 		padding-top: 0.75rem;
 	}
 `;

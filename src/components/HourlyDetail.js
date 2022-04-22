@@ -231,6 +231,7 @@ const HourlyDetailDescription = styled.div`
 	h2 {
 		text-transform: capitalize;
 		font-weight: 400;
+		font-family: 'SofiaProRegular';
 		font-size: 1.125rem;
 		margin-top: 0.25rem;
 	}
@@ -251,12 +252,14 @@ const HourlyDetailTemp = styled.div`
 		display: flex;
 		align-items: flex-start;
 		font-weight: 200;
+		font-family: 'SofiaProExtraLight';
 		font-size: 3.75rem;
 		margin-bottom: 0.25rem;
 
 		span {
 			font-size: 1.5rem;
 			font-weight: 100;
+			font-family: 'SofiaProUltraLight';
 			margin-top: 0.2rem;
 		}
 	}

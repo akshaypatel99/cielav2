@@ -269,6 +269,7 @@ const DailyDetailDescription = styled.div`
 	h2 {
 		text-transform: capitalize;
 		font-weight: 400;
+		font-family: 'SofiaProRegular';
 		font-size: 1.125rem;
 		margin-top: 0.25rem;
 	}
@@ -290,6 +291,7 @@ const DailyDetailTemp = styled.div`
 		display: flex;
 		align-items: flex-start;
 		font-weight: 200;
+		font-family: 'SofiaProExtraLight';
 	}
 
 	h3 {
@@ -299,6 +301,7 @@ const DailyDetailTemp = styled.div`
 		span {
 			font-size: 1.5rem;
 			font-weight: 100;
+			font-family: 'SofiaProUltraLight';
 			margin-top: 0.25rem;
 		}
 	}
@@ -309,6 +312,7 @@ const DailyDetailTemp = styled.div`
 		span {
 			font-size: 1.25rem;
 			font-weight: 100;
+			font-family: 'SofiaProUltraLight';
 			margin-top: 0.125rem;
 		}
 	}

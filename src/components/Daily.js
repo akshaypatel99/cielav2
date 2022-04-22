@@ -100,6 +100,7 @@ const DailyGrid = styled.div`
 const DailyGridDay = styled.p`
 	margin-left: 0.5rem;
 	font-weight: 400;
+	font-family: 'SofiaProRegular'; ;
 `;
 
 const DailyGridRain = styled.p`
@@ -107,6 +108,7 @@ const DailyGridRain = styled.p`
 	justify-content: center;
 	align-items: center;
 	font-weight: 200;
+	font-family: 'SofiaProExtraLight';
 
 	svg {
 		margin-right: 0.25rem;

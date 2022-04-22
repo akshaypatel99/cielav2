@@ -40,7 +40,7 @@ export default function Home() {
 			{status === 'resolved' && !showSearchModal && (
 				<SearchIcon
 					tabIndex='2'
-					size={18}
+					size={22}
 					onClick={() => setShowSearchModal(!showSearchModal)}
 					onKeyUp={(event) => {
 						if (event.key === 'Enter') {
@@ -53,7 +53,7 @@ export default function Home() {
 			{showSearchModal && (
 				<CloseIcon
 					tabIndex='2'
-					size={18}
+					size={22}
 					onClick={() => setShowSearchModal(!showSearchModal)}
 					onKeyUp={(event) => {
 						if (event.key === 'Enter') {
