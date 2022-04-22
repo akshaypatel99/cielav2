@@ -54,129 +54,151 @@ const DailyDetail = ({ pathId }) => {
 	}, [day.dt, index, navigate]);
 
 	return (
-		<>
-			<CardShadow className='shadow' onClick={exitDetailHandler}>
-				<DayDetail>
-					<>
-						<div className='dailydtl__title'>
-							<h2>{formatDayDate(day.dt, timezoneOffset)}</h2>
-						</div>
+		<CardShadow className='shadow' onClick={exitDetailHandler}>
+			<DayDetail>
+				<>
+					<DailyDetailClose
+						ref={closeRef}
+						tabIndex='5'
+						onKeyDown={(event) => {
+							if (event.key === 'Enter') {
+								navigate('/');
+							}
+						}}
+					>
+						<FiX onClick={() => navigate('/')} />
+					</DailyDetailClose>
 
-						<div
-							className='dailydtl__close'
-							ref={closeRef}
-							tabIndex='5'
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									navigate('/');
-								}
-							}}
-						>
-							<FiX onClick={() => navigate('/')} />
-						</div>
+					<DailyDetailMain>
+						<DailyDetailDay>
+							<h1>{formatDayDate(day.dt, timezoneOffset)}</h1>
+						</DailyDetailDay>
+						<DailyDetailDescription>
+							<h2>{day.weather[0].description}</h2>
+							<img
+								src={convertIcon(day.weather[0].icon)}
+								alt={day.weather[0].main}
+							/>
+						</DailyDetailDescription>
+						<DailyDetailTemp>
+							<h3>
+								{Math.round(day.temp.max)}
+								<span>&#176;C</span>
+							</h3>
+							<h4>
+								{Math.round(day.temp.min)}
+								<span>&#176;C</span>
+							</h4>
+						</DailyDetailTemp>
+					</DailyDetailMain>
 
-						<div className='dailydtl'>
-							<div className='dailydtl__top'>
-								<div className='dailydtl__top__desc'>
-									<h3>{day.weather[0].description}</h3>
-								</div>
+					<DailyDetailGrid>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Sunrise</DailyDetailCardTitle>
+							<DailyDetailCardContent>
+								{formatTime(day.sunrise, timezoneOffset)}
+							</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Sunset</DailyDetailCardTitle>
+							<DailyDetailCardContent>
+								{formatTime(day.sunset, timezoneOffset)}
+							</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>UV Index</DailyDetailCardTitle>
+							<DailyDetailCardContent>{day.uvi}</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Cloudiness</DailyDetailCardTitle>
+							<DailyDetailCardContent>{day.clouds}%</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Probability of Rain</DailyDetailCardTitle>
+							<DailyDetailCardContent>
+								{(day.pop * 100).toFixed(0)}%
+							</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Humidity</DailyDetailCardTitle>
+							<DailyDetailCardContent>{day.humidity}%</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Pressure</DailyDetailCardTitle>
+							<DailyDetailCardContent>
+								{day.pressure} hPa
+							</DailyDetailCardContent>
+						</DailyDetailCard>
+						<DailyDetailCard>
+							<DailyDetailCardTitle>Wind</DailyDetailCardTitle>
+							<DailyDetailCardContent className='wind'>
+								{Math.round(day.wind_speed * 2.237).toFixed(0)} mph{' '}
+								{convertWindDirection(day.wind_deg)} wind
+							</DailyDetailCardContent>
+						</DailyDetailCard>
+					</DailyDetailGrid>
 
-								<div className='dailydtl__top__weather'>
-									<div className='dailydtl__top__weather__icon'>
-										<img
-											src={convertIcon(day.weather[0].icon)}
-											alt={day.weather[0].main}
-										/>
-									</div>
-									<div className='dailydtl__top__weather__temp'>
-										<h2>
-											<span>{Math.round(day.temp.max)}&#176;C</span>
-										</h2>
-										<h2>{Math.round(day.temp.min)}&#176;C</h2>
-									</div>
-								</div>
-							</div>
-							<div className='dailydtl__bottom'>
-								<div className='dailydtl__bottom__info'>
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>{formatTime(day.sunrise, timezoneOffset)}</h6>
-									</div>
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>{formatTime(day.sunset, timezoneOffset)}</h6>
-									</div>
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>UV Index: {day.uvi}</h6>
-									</div>
+					<DailyDetailTempTable>
+						<colgroup span='3'></colgroup>
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th>Temperature &#176;C</th>
+								<th>Feels Like &#176;C</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Morning</td>
+								<td className='number'>{Math.round(day.temp.morn)}</td>
+								<td className='number'>{Math.round(day.feels_like.morn)}</td>
+							</tr>
+							<tr>
+								<td>Day</td>
+								<td className='number'>{Math.round(day.temp.day)}</td>
+								<td className='number'>{Math.round(day.feels_like.day)}</td>
+							</tr>
+							<tr>
+								<td>Evening</td>
+								<td className='number'>{Math.round(day.temp.eve)}</td>
+								<td className='number'>{Math.round(day.feels_like.eve)}</td>
+							</tr>
 
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>{day.clouds}% cloudy</h6>
-									</div>
+							<tr>
+								<td>Night</td>
+								<td className='number'>{Math.round(day.temp.night)}</td>
+								<td className='number'>{Math.round(day.feels_like.night)}</td>
+							</tr>
+						</tbody>
+					</DailyDetailTempTable>
 
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>{(day.pop * 100).toFixed(0)}% chance of rain</h6>
-									</div>
-
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>{day.humidity}% humidity</h6>
-									</div>
-
-									<div className='dailydtl__bottom__info__icons'>
-										<h6>Pressure: {day.pressure} hPa</h6>
-									</div>
-
-									<div className='dailydtl__bottom__info__icons'>
-										<h6 className='wind'>
-											{Math.round(day.wind_speed * 2.237).toFixed(0)} mph{' '}
-											{convertWindDirection(day.wind_deg)} wind
-										</h6>
-									</div>
-
-									<div className='dailydtl__bottom__info__temp__feel'>
-										<div className='temp'>
-											<h6>Temperature:</h6>
-											<h6>Day: {day.temp.day.toFixed(1)}&#176;C</h6>
-											<h6>Eve: {day.temp.eve.toFixed(1)}&#176;C</h6>
-											<h6>Morn: {day.temp.morn.toFixed(1)}&#176;C</h6>
-											<h6>Night: {day.temp.night.toFixed(1)}&#176;C</h6>
-										</div>
-										<div className='feel'>
-											<h6>Feels Like:</h6>
-											<h6>Day: {day.feels_like.day.toFixed(1)}&#176;C</h6>
-											<h6>Eve: {day.feels_like.eve.toFixed(1)}&#176;C</h6>
-											<h6>Morn: {day.feels_like.morn.toFixed(1)}&#176;C</h6>
-											<h6>Night: {day.feels_like.night.toFixed(1)}&#176;C</h6>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className='dailydtl__nav__prev'>
-							{index > 0 && (
-								<Link to={`/daily/${day.dt - 86400}`}>
-									<FiChevronsLeft />
-								</Link>
-							)}
-						</div>
-						<div className='dailydtl__nav__next'>
-							{index < 7 && (
-								<Link to={`/daily/${day.dt + 86400}`}>
-									<FiChevronsRight />
-								</Link>
-							)}
-						</div>
-					</>
-				</DayDetail>
-			</CardShadow>
-		</>
+					<DailyDetailNavPrev>
+						{index > 0 && (
+							<Link to={`/daily/${day.dt - 86400}`}>
+								<FiChevronsLeft />
+							</Link>
+						)}
+					</DailyDetailNavPrev>
+					<DailyDetailNavNext>
+						{index < 7 && (
+							<Link to={`/daily/${day.dt + 86400}`}>
+								<FiChevronsRight />
+							</Link>
+						)}
+					</DailyDetailNavNext>
+				</>
+			</DayDetail>
+		</CardShadow>
 	);
 };
+
+export default DailyDetail;
 
 const CardShadow = styled.div`
 	width: 100%;
 	height: 100%;
 	overflow-y: scroll;
-	background: hsl(208, 100%, 60%, 0.5);
+	background: hsla(219, 58%, 28%, 0.75);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -197,166 +219,163 @@ const DayDetail = styled.div`
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 	z-index: 10;
-	background: hsl(0, 0%, 100%, 0.2);
+	background-image: linear-gradient(
+		140deg,
+		hsl(219, 58%, 28%) 0%,
+		hsl(219, 58%, 28%) 1%,
+		hsl(218, 57%, 38%) 100%
+	);
 	box-shadow: 0 20px 40px hsl(0, 0%, 0%, 0.2);
-	backdrop-filter: blur(25px);
-	-webkit-backdrop-filter: blur(25px);
-	border-radius: 10px;
-	border: 1px solid hsl(0, 0%, 100%, 0.2);
+`;
 
-	.dailydtl__title {
-		h2 {
-			text-transform: uppercase;
-			font-weight: 700;
-		}
-	}
+const DailyDetailClose = styled.div`
+	position: absolute;
+	top: 1.5rem;
+	right: 1rem;
+	cursor: pointer;
+`;
 
-	.dailydtl__close {
-		position: absolute;
-		top: 1.5rem;
-		right: 1rem;
-		cursor: pointer;
-	}
+const DailyDetailNavPrev = styled.div`
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+`;
+const DailyDetailNavNext = styled.div`
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+`;
 
-	.dailydtl {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 2rem;
-	}
+const DailyDetailMain = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 1rem;
+`;
 
-	.dailydtl__top {
-		width: 100%;
-		min-height: 170px;
-		display: flex;
-		flex-direction: column;
+const DailyDetailDay = styled.div`
+	margin-bottom: 1.5rem;
 
-		&__desc {
-			h3 {
-				text-transform: uppercase;
-				text-align: center;
-				font-weight: 700;
-			}
-		}
-
-		&__weather {
-			display: flex;
-			justify-content: space-around;
-			margin-top: 1rem;
-			padding: 0.5rem;
-
-			&__icon {
-				img {
-					height: 8rem;
-					width: 8rem;
-				}
-			}
-
-			&__temp {
-				display: flex;
-				flex-direction: column;
-				margin-left: 0.5rem;
-				text-align: right;
-
-				h2 {
-					font-size: 3rem;
-					font-weight: 400;
-
-					span {
-						font-weight: 700;
-					}
-				}
-			}
-		}
-	}
-
-	.dailydtl__bottom {
-		display: flex;
-		width: 90%;
-		margin: 0 auto 2rem;
-
-		&__info {
-			display: flex;
-			flex-wrap: wrap;
-			margin-top: 1rem;
-
-			& > * {
-				flex: 1 1 112px;
-			}
-
-			svg,
-			h6 {
-				margin-right: 0.75rem;
-			}
-
-			&__icons {
-				display: flex;
-				height: 44px;
-				margin-bottom: 0.75rem;
-				align-items: center;
-			}
-
-			&__temp__feel {
-				display: flex;
-				width: 100%;
-				justify-content: space-around;
-
-				.temp,
-				.feel {
-					min-width: 120px;
-
-					h6 {
-						margin-top: 0.5rem;
-					}
-				}
-			}
-		}
-	}
-
-	.dailydtl__nav__prev {
-		position: absolute;
-		bottom: 1rem;
-		left: 1rem;
-	}
-
-	.dailydtl__nav__next {
-		position: absolute;
-		bottom: 1rem;
-		right: 1rem;
-	}
-
-	@media (min-width: 500px) {
-		max-width: 460px;
-
-		.dailydtl__bottom {
-			width: 90%;
-			margin: 1rem auto;
-
-			&__info {
-				&__icons {
-					/* height: 60px; */
-
-					p {
-						font-size: 0.9rem;
-					}
-				}
-
-				&__temp__feel {
-					padding-bottom: 1rem;
-				}
-			}
-		}
-	}
-
-	@media (max-height: 800px) {
-		.dailydtl__bottom__info__temp__feel {
-			display: none;
-		}
-	}
-
-	@media (min-height: 1000px) {
-		height: 700px;
+	h1 {
+		font-size: 1.75rem;
 	}
 `;
 
-export default DailyDetail;
+const DailyDetailDescription = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	h2 {
+		text-transform: capitalize;
+		font-weight: 400;
+		font-size: 1.125rem;
+		margin-top: 0.25rem;
+	}
+
+	img {
+		height: 4rem;
+		width: 4rem;
+	}
+`;
+
+const DailyDetailTemp = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 1rem;
+
+	h3,
+	h4 {
+		display: flex;
+		align-items: flex-start;
+		font-weight: 200;
+	}
+
+	h3 {
+		font-size: 3.5rem;
+		margin-bottom: 0.25rem;
+
+		span {
+			font-size: 1.5rem;
+			font-weight: 100;
+			margin-top: 0.25rem;
+		}
+	}
+
+	h4 {
+		font-size: 2.5rem;
+
+		span {
+			font-size: 1.25rem;
+			font-weight: 100;
+			margin-top: 0.125rem;
+		}
+	}
+`;
+
+const DailyDetailGrid = styled.div`
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	grid-column-gap: 2.5rem;
+	grid-row-gap: 1rem;
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+`;
+
+const DailyDetailCard = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 0.5rem;
+	height: 100%;
+	width: 100%;
+`;
+
+const DailyDetailCardTitle = styled.h5`
+	font-size: 0.75rem;
+	opacity: 0.9;
+	text-transform: uppercase;
+	margin-bottom: 0.125rem;
+`;
+
+const DailyDetailCardContent = styled.p`
+	font-size: 1.1rem;
+`;
+
+const DailyDetailTempTable = styled.table`
+	font-size: 0.9rem;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+
+	thead {
+		margin-bottom: 0.5rem;
+	}
+
+	tr {
+		margin-bottom: 0.5rem;
+	}
+
+	th {
+		font-size: 0.75rem;
+		opacity: 0.9;
+		text-transform: uppercase;
+		text-align: left;
+		padding-bottom: 0.5rem;
+	}
+
+	td {
+		margin-right: 0.5rem;
+		padding-bottom: 0.25rem;
+	}
+
+	.number {
+		text-align: center;
+	}
+`;

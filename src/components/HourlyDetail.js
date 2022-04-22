@@ -56,106 +56,111 @@ const HourlyDetail = ({ pathId }) => {
 	}, [hour.dt, index, navigate]);
 
 	return (
-		<>
-			<CardShadow className='shadow' onClick={exitDetailHandler}>
-				<HourDetail>
-					<>
-						<div className='hourlydtl__title'>
-							<h2>{formatTime(hour.dt, timezoneOffset)}</h2>
-						</div>
+		<CardShadow className='shadow' onClick={exitDetailHandler}>
+			<HourDetail>
+				<HourlyDetailClose
+					ref={closeRef}
+					tabIndex='5'
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							navigate('/');
+						}
+					}}
+				>
+					<FiX onClick={() => navigate('/')} />
+				</HourlyDetailClose>
 
-						<div
-							className='hourlydtl__close'
-							ref={closeRef}
-							tabIndex='6'
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									navigate('/');
-								}
-							}}
-						>
-							<FiX onClick={() => navigate('/')} />
-						</div>
+				<HourlyDetailMain>
+					<HourlyDetailDay>
+						<h1>{formatTime(hour.dt, timezoneOffset)}</h1>
+					</HourlyDetailDay>
+					<HourlyDetailDescription>
+						<h2>{hour.weather[0].description}</h2>
+						<img
+							src={convertIcon(hour.weather[0].icon)}
+							alt={hour.weather[0].main}
+						/>
+					</HourlyDetailDescription>
+					<HourlyDetailTemp>
+						<h3>
+							{Math.round(hour.temp)}
+							<span>&#176;C</span>
+						</h3>
+					</HourlyDetailTemp>
+				</HourlyDetailMain>
 
-						<div className='hourlydtl'>
-							<div className='hourlydtl__top'>
-								<div className='hourlydtl__top__desc'>
-									<h3>{hour.weather[0].description}</h3>
-								</div>
+				<HourlyDetailGrid>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Feels like</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>
+							{hour.feels_like.toFixed(0)}&#176;C
+						</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Cloudiness</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>{hour.clouds}%</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>UV Index</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>{hour.uvi}</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Probability of Rain</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>
+							{(hour.pop * 100).toFixed(0)}%
+						</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Humidity</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>{hour.humidity}%</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Pressure</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>
+							{hour.pressure} hPa
+						</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Visibility</HourlyDetailCardTitle>
+						<HourlyDetailCardContent>
+							{hour.visibility} metres
+						</HourlyDetailCardContent>
+					</HourlyDetailCard>
+					<HourlyDetailCard>
+						<HourlyDetailCardTitle>Wind</HourlyDetailCardTitle>
+						<HourlyDetailCardContent className='wind'>
+							{Math.round(hour.wind_speed * 2.237).toFixed(0)} mph{' '}
+							{convertWindDirection(hour.wind_deg)} wind
+						</HourlyDetailCardContent>
+					</HourlyDetailCard>
+				</HourlyDetailGrid>
 
-								<div className='hourlydtl__top__weather'>
-									<img
-										src={convertIcon(hour.weather[0].icon)}
-										alt={hour.weather[0].main}
-									/>
-									<h2>{Math.round(hour.temp)}&#176;C</h2>
-								</div>
-							</div>
-							<div className='hourlydtl__bottom'>
-								<div className='hourlydtl__bottom__info'>
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>Feels like: {hour.feels_like.toFixed(0)}&#176;C</h6>
-									</div>
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>{hour.clouds}% cloudy</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>{(hour.pop * 100).toFixed(0)}% chance of rain</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>UV Index: {hour.uvi}</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>{hour.humidity}% humidity</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>Pressure: {hour.pressure} hPa</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>Visibility: {hour.visibility} metres</h6>
-									</div>
-
-									<div className='hourlydtl__bottom__info__icons'>
-										<h6>
-											{Math.round(hour.wind_speed * 2.237).toFixed(0)} mph{' '}
-											{convertWindDirection(hour.wind_deg)} wind
-										</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className='hourlydtl__nav__prev'>
-							{index > 0 && (
-								<Link to={`/hourly/${hour.dt - 3600}`}>
-									<FiChevronsLeft />
-								</Link>
-							)}
-						</div>
-						<div className='hourlydtl__nav__next'>
-							{index < 47 && (
-								<Link to={`/hourly/${hour.dt + 3600}`}>
-									<FiChevronsRight />
-								</Link>
-							)}
-						</div>
-					</>
-				</HourDetail>
-			</CardShadow>
-		</>
+				<HourlyDetailNavPrev>
+					{index > 0 && (
+						<Link to={`/hourly/${hour.dt - 3600}`}>
+							<FiChevronsLeft />
+						</Link>
+					)}
+				</HourlyDetailNavPrev>
+				<HourlyDetailNavNext>
+					{index < 47 && (
+						<Link to={`/hourly/${hour.dt + 3600}`}>
+							<FiChevronsRight />
+						</Link>
+					)}
+				</HourlyDetailNavNext>
+			</HourDetail>
+		</CardShadow>
 	);
 };
 
+export default HourlyDetail;
+
 const CardShadow = styled.div`
 	width: 100%;
-	min-height: 100vh;
+	min-height: 100%;
 	overflow-y: scroll;
-	background: hsl(208, 100%, 60%, 0.5);
+	background: hsla(219, 58%, 28%, 0.75);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -176,135 +181,116 @@ const HourDetail = styled.div`
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 	z-index: 10;
-	background: hsl(0, 0%, 100%, 0.2);
+	background-image: linear-gradient(
+		140deg,
+		hsl(219, 58%, 28%) 0%,
+		hsl(219, 58%, 28%) 1%,
+		hsl(218, 57%, 38%) 100%
+	);
 	box-shadow: 0 20px 40px hsl(0, 0%, 0%, 0.2);
-	backdrop-filter: blur(25px);
-	-webkit-backdrop-filter: blur(25px);
-	border-radius: 10px;
-	border: 1px solid hsl(0, 0%, 100%, 0.2);
+`;
 
-	.hourlydtl__close {
-		position: absolute;
-		top: 1.5rem;
-		right: 1rem;
-		cursor: pointer;
-	}
+const HourlyDetailClose = styled.div`
+	position: absolute;
+	top: 1.5rem;
+	right: 1rem;
+	cursor: pointer;
+`;
 
-	.hourlydtl {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-between;
-		margin-top: 2rem;
-	}
+const HourlyDetailNavPrev = styled.div`
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+`;
+const HourlyDetailNavNext = styled.div`
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+`;
 
-	.hourlydtl__title {
-		h2 {
-			font-weight: 700;
-		}
-	}
+const HourlyDetailMain = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 1rem;
+`;
 
-	.hourlydtl__top {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
+const HourlyDetailDay = styled.div`
+	margin-bottom: 1.5rem;
 
-		&__desc {
-			width: 100%;
-
-			h3 {
-				text-transform: uppercase;
-				text-align: center;
-				font-weight: 700;
-			}
-		}
-
-		&__weather {
-			width: 100%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-around;
-			align-items: center;
-			margin: 0 auto;
-
-			img {
-				height: 8rem;
-				width: 8rem;
-			}
-
-			h2 {
-				font-size: 3.5rem;
-				font-weight: 700;
-			}
-		}
-	}
-
-	.hourlydtl__bottom {
-		display: flex;
-		margin-bottom: 3rem;
-
-		&__info {
-			display: flex;
-			flex-wrap: wrap;
-			margin-top: 1rem;
-
-			& > * {
-				flex: 1 1 112px;
-				margin: 0.25rem;
-			}
-
-			svg,
-			h6 {
-				margin-right: 0.75rem;
-			}
-
-			&__icons {
-				display: flex;
-				height: 48px;
-				align-items: center;
-			}
-		}
-	}
-
-	.hourlydtl__nav__prev {
-		position: absolute;
-		bottom: 1rem;
-		left: 1rem;
-	}
-
-	.hourlydtl__nav__next {
-		position: absolute;
-		bottom: 1rem;
-		right: 1rem;
-	}
-
-	@media (min-width: 500px) {
-		max-width: 460px;
-
-		.hourlydtl__bottom {
-			width: 90%;
-			margin: 1rem auto;
-
-			&__info__icons {
-				height: 64px;
-				margin-top: 1rem;
-
-				p {
-					font-size: 0.9rem;
-				}
-			}
-		}
-	}
-
-	@media (max-height: 700px) {
-		.hourlydtl__bottom__info__icons {
-			height: 44px;
-		}
-	}
-
-	@media (min-height: 1000px) {
-		height: 650px;
+	h1 {
+		font-size: 1.75rem;
 	}
 `;
 
-export default HourlyDetail;
+const HourlyDetailDescription = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	h2 {
+		text-transform: capitalize;
+		font-weight: 400;
+		font-size: 1.125rem;
+		margin-top: 0.25rem;
+	}
+
+	img {
+		height: 4rem;
+		width: 4rem;
+	}
+`;
+
+const HourlyDetailTemp = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 1rem;
+
+	h3 {
+		display: flex;
+		align-items: flex-start;
+		font-weight: 200;
+		font-size: 3.75rem;
+		margin-bottom: 0.25rem;
+
+		span {
+			font-size: 1.5rem;
+			font-weight: 100;
+			margin-top: 0.2rem;
+		}
+	}
+`;
+
+const HourlyDetailGrid = styled.div`
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	grid-column-gap: 2.5rem;
+	grid-row-gap: 1rem;
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+`;
+
+const HourlyDetailCard = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 0.5rem;
+	height: 100%;
+	width: 100%;
+`;
+
+const HourlyDetailCardTitle = styled.h5`
+	font-size: 0.75rem;
+	opacity: 0.9;
+	text-transform: uppercase;
+	margin-bottom: 0.125rem;
+`;
+
+const HourlyDetailCardContent = styled.p`
+	font-size: 1.1rem;
+`;

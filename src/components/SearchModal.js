@@ -4,7 +4,7 @@ import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
 
-const Search = () => {
+const SearchModal = () => {
 	const [showSearchInput, setShowSearchInput] = React.useState(false);
 	const [city, setCity] = React.useState('');
 
@@ -25,78 +25,100 @@ const Search = () => {
 	};
 
 	return (
-		<StyledSearch>
-			<SearchOptions>
-				<SearchOption
-					tabIndex='1'
-					onClick={handleCoords}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							handleCoords();
-						}
-					}}
-				>
-					<FiMapPin color='#fff' size={28} />
-					<p>Location</p>
-				</SearchOption>
+		<CardShadow>
+			<StyledSearch>
+				<SearchOptions>
+					<SearchOption
+						tabIndex='1'
+						onClick={handleCoords}
+						onKeyDown={(event) => {
+							if (event.key === 'Enter') {
+								handleCoords();
+							}
+						}}
+					>
+						<FiMapPin color='#fff' size={28} />
+						<p>Location</p>
+					</SearchOption>
 
-				<div className='vl'></div>
+					<div className='vl'></div>
 
-				<SearchOption
-					tabIndex='2'
-					onClick={() => setShowSearchInput(!showSearchInput)}
-					onKeyUp={(event) => {
-						if (event.key === 'Enter') {
-							setShowSearchInput(!showSearchInput);
-						}
-					}}
-				>
-					<FiSearch color='#fff' size={28} />
-					<p>Search</p>
-				</SearchOption>
-			</SearchOptions>
-			{showSearchInput && (
-				<SearchInput>
-					<form onSubmit={handleCity}>
-						<input
-							name='city'
-							type='text'
-							placeholder='Enter city & country'
-							value={city}
-							onChange={(event) => setCity(event.target.value)}
-							tabIndex='3'
-							onKeyDown={(event) => {
-								if (event.key === 'Escape') {
-									setShowSearchInput(!showSearchInput);
-								}
-							}}
-						/>
-						<button
-							onClick={handleCity}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									handleCity(city);
-								}
-							}}
-							onTouchStart={handleCity}
-							type='submit'
-						>
-							Get Weather
-						</button>
-					</form>
-					<p>For best results, enter postcode, city & country.</p>
-				</SearchInput>
-			)}
-		</StyledSearch>
+					<SearchOption
+						tabIndex='2'
+						onClick={() => setShowSearchInput(!showSearchInput)}
+						onKeyUp={(event) => {
+							if (event.key === 'Enter') {
+								setShowSearchInput(!showSearchInput);
+							}
+						}}
+					>
+						<FiSearch color='#fff' size={28} />
+						<p>Search</p>
+					</SearchOption>
+				</SearchOptions>
+				{showSearchInput && (
+					<SearchInput>
+						<form onSubmit={handleCity}>
+							<input
+								name='city'
+								type='text'
+								placeholder='Enter city & country'
+								value={city}
+								onChange={(event) => setCity(event.target.value)}
+								tabIndex='3'
+								onKeyDown={(event) => {
+									if (event.key === 'Escape') {
+										setShowSearchInput(!showSearchInput);
+									}
+								}}
+							/>
+							<button
+								onClick={handleCity}
+								onKeyDown={(event) => {
+									if (event.key === 'Enter') {
+										handleCity(city);
+									}
+								}}
+								onTouchStart={handleCity}
+								type='submit'
+							>
+								Get Weather
+							</button>
+						</form>
+						<p>For best results, enter postcode, city & country.</p>
+					</SearchInput>
+				)}
+			</StyledSearch>
+		</CardShadow>
 	);
 };
 
-export default Search;
+export default SearchModal;
+
+const CardShadow = styled.div`
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	background: hsla(219, 58%, 28%, 0.95);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 5;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+`;
 
 const StyledSearch = styled.div`
 	width: 90%;
 	height: 5rem;
-	margin: 3rem auto;
+	position: absolute;
+	margin: auto;
+	top: 25%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+	z-index: 10;
 
 	.vl {
 		background-color: hsla(0, 0%, 100%, 0.2);

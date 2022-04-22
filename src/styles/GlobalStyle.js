@@ -11,13 +11,11 @@ export const GlobalStyle = createGlobalStyle`
     color: hsl(0, 100%, 100%);
   }
 
-  html, body, #root {
+  html, body {
     height: 100%;
   }
 
   body {
     scroll-behavior: smooth;
   }
-
-
 `;

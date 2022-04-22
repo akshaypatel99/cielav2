@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ErrorMessage from '../components/Error';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import { useWeather } from '../context/WeatherContext';
-import { IoIosSearch } from 'react-icons/io';
+import { FiSearch, FiX } from 'react-icons/fi';
 import Currently from '../components/Currently';
 import Hourly from '../components/Hourly';
 import Daily from '../components/Daily';
 import Minutely from '../components/Minutely';
 import DailyDetail from '../components/DailyDetail';
 import HourlyDetail from '../components/HourlyDetail';
+import SearchModal from '../components/SearchModal';
 
 export default function Home() {
 	const [showSearch, setShowSearch] = useState(true);
+	const [showSearchModal, setShowSearchModal] = useState(false);
 	const { weatherState } = useWeather();
 	const { status, weather, error } = weatherState;
-
-	let params = useParams();
 
 	const location = useLocation();
 	const pathId = location.pathname.split('/')[2];
@@ -27,6 +27,7 @@ export default function Home() {
 	useEffect(() => {
 		if (status === 'resolved' && weather) {
 			setShowSearch(false);
+			setShowSearchModal(false);
 		}
 	}, [status, weather]);
 
@@ -36,7 +37,20 @@ export default function Home() {
 			{pathDiv === 'hourly' && pathId && <HourlyDetail pathId={pathId} />}
 
 			<Header />
-			{!showSearch && <SearchIcon onClick={() => setShowSearch(!showSearch)} />}
+			{status === 'resolved' && !showSearchModal && (
+				<SearchIcon
+					size={18}
+					onClick={() => setShowSearchModal(!showSearchModal)}
+				/>
+			)}
+			{showSearchModal && (
+				<CloseIcon
+					size={18}
+					onClick={() => setShowSearchModal(!showSearchModal)}
+				/>
+			)}
+			{showSearchModal && <SearchModal />}
+
 			{showSearch && <Search />}
 			<Results>
 				{status === 'loading' && <p>Loading...</p>}
@@ -56,7 +70,7 @@ export default function Home() {
 
 const StyledHome = styled.div`
 	width: 420px;
-	height: 900px;
+	min-height: 900px;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -74,9 +88,9 @@ const StyledHome = styled.div`
 	position: relative;
 `;
 
-const SearchIcon = styled(IoIosSearch)`
+const SearchIcon = styled(FiSearch)`
 	position: absolute;
-	top: 5rem;
+	top: 6rem;
 	right: 1rem;
 	font-size: 1.75rem;
 	color: white;
@@ -84,10 +98,22 @@ const SearchIcon = styled(IoIosSearch)`
 	cursor: pointer;
 `;
 
+const CloseIcon = styled(FiX)`
+	position: absolute;
+	top: 6rem;
+	right: 1rem;
+	font-size: 1.75rem;
+	color: white;
+	margin-right: 1rem;
+	cursor: pointer;
+	z-index: 50;
+`;
+
 const Results = styled.div`
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	align-items: center;
+	justify-content: center;
 `;

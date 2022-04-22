@@ -13,7 +13,7 @@ import { formatTime } from '../utils/convertUnixTime';
 const Currently = () => {
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
-	const { current, daily, timezoneOffset } = weather;
+	const { current, daily, location, timezoneOffset } = weather;
 
 	return (
 		<StyledCurrently>
@@ -28,7 +28,7 @@ const Currently = () => {
 				{Math.round(current.temp)}
 				<span>&#176;C</span>
 			</CurrentlyTemp>
-			<CurrentlyCity>{current.location ?? 'London, UK'}</CurrentlyCity>
+			<CurrentlyCity>{location}</CurrentlyCity>
 			<CurrentlyTempGrid>
 				<CurrentlyHigh>
 					<FiChevronUp />
@@ -72,6 +72,7 @@ const CurrentlyDescription = styled.div`
 	h4 {
 		text-transform: capitalize;
 		font-size: 1.125rem;
+		font-weight: 400;
 		margin-top: 0.25rem;
 	}
 
@@ -85,7 +86,7 @@ const CurrentlyTemp = styled.h3`
 	grid-column: 2 / span 1;
 	grid-row: 1 / span 1;
 	margin-top: 1.5rem;
-	margin-bottom: 0.5rem;
+	margin-bottom: 1rem;
 	font-size: 4.5rem;
 	font-weight: 200;
 	display: flex;
@@ -100,6 +101,7 @@ const CurrentlyTemp = styled.h3`
 
 const CurrentlyCity = styled.h2`
 	font-size: 1rem;
+	margin-bottom: 0.5rem;
 `;
 
 const CurrentlyTempGrid = styled.div`
@@ -107,7 +109,7 @@ const CurrentlyTempGrid = styled.div`
 	grid-template-columns: (1fr, 2fr, 1fr);
 	grid-column-gap: 1rem;
 	margin-top: 2rem;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 `;
 
 const CurrentlyFeelsLike = styled.div`

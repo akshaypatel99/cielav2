@@ -22,9 +22,10 @@ const StyledHeader = styled.header`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-top: 1vh;
 
 	h1 {
-		font-size: 1.25rem;
+		font-size: 1.5rem;
 		font-weight: 200;
 		font-style: italic;
 		margin-bottom: 0.75rem;
