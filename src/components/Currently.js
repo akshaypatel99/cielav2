@@ -1,60 +1,21 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import convertIcon from '../utils/convertIcon';
 import {
-	FiAlertTriangle,
 	FiChevronUp,
 	FiChevronDown,
 	FiSunrise,
 	FiSunset,
-	FiX,
 } from 'react-icons/fi';
 import { formatTime } from '../utils/convertUnixTime';
-import AlertModal from './AlertModal';
 
 const Currently = () => {
-	const [showAlert, setShowAlert] = useState(false);
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
-	const { alerts, current, daily, location, timezoneOffset } = weather;
+	const { current, daily, location, timezoneOffset } = weather;
 
 	return (
 		<StyledCurrently>
-			{/* {!showAlert && (
-				<AlertIcon
-					size={22}
-					aria-label='open weather warning'
-					tabIndex='1'
-					onClick={() => setShowAlert(!showAlert)}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							setShowAlert(!showAlert);
-						}
-					}}
-				/>
-			)}
-			{showAlert && (
-				<CloseIcon
-					size={22}
-					aria-label='close weather warning'
-					tabIndex='1'
-					onClick={() => setShowAlert(!showAlert)}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							setShowAlert(!showAlert);
-						}
-					}}
-				/>
-			)}
-			{showAlert && (
-				<AlertModal
-					alerts={alerts}
-					timezoneOffset={timezoneOffset}
-					showAlert={showAlert}
-					setShowAlert={setShowAlert}
-				/>
-			)} */}
 			<CurrentlyDescription>
 				<img
 					src={convertIcon(current.weather[0].icon)}
@@ -199,25 +160,4 @@ const CurrentlySun = styled.div`
 			margin-left: 0.5rem;
 		}
 	}
-`;
-
-const AlertIcon = styled(FiAlertTriangle)`
-	position: absolute;
-	top: -1rem;
-	left: 1rem;
-	font-size: 1.75rem;
-	color: white;
-	margin-right: 1rem;
-	cursor: pointer;
-`;
-
-const CloseIcon = styled(FiX)`
-	position: absolute;
-	top: -1rem;
-	left: 1rem;
-	font-size: 1.75rem;
-	color: white;
-	margin-right: 1rem;
-	cursor: pointer;
-	/* z-index: 20; */
 `;

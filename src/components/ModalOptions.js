@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import { FiAlertTriangle, FiSearch, FiX } from 'react-icons/fi';
@@ -10,7 +10,13 @@ const ModalOptions = () => {
 	const [showAlert, setShowAlert] = useState(false);
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
-	const { alerts, timezoneOffset } = weather;
+	const { status, alerts, timezoneOffset } = weather;
+
+	useEffect(() => {
+		if (status === 'resolved' && weather) {
+			setShowSearchModal(false);
+		}
+	}, [status, weather]);
 
 	return (
 		<>
