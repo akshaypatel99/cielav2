@@ -27,7 +27,6 @@ const StyledHeader = styled.header`
 	h1 {
 		font-size: 1.5rem;
 		font-weight: 200;
-		font-style: italic;
 		margin-bottom: 0.75rem;
 	}
 

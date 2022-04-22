@@ -1,22 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import convertIcon from '../utils/convertIcon';
 import {
+	FiAlertTriangle,
 	FiChevronUp,
 	FiChevronDown,
 	FiSunrise,
 	FiSunset,
+	FiX,
 } from 'react-icons/fi';
 import { formatTime } from '../utils/convertUnixTime';
+import Alert from './Alert';
 
 const Currently = () => {
+	const [showAlert, setShowAlert] = useState(false);
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
-	const { current, daily, location, timezoneOffset } = weather;
+	const { alerts, current, daily, location, timezoneOffset } = weather;
 
 	return (
 		<StyledCurrently>
+			{!showAlert && (
+				<AlertIcon
+					size={18}
+					aria-label='weather warning'
+					tabIndex='4'
+					onClick={() => setShowAlert(!showAlert)}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							setShowAlert(!showAlert);
+						}
+					}}
+				/>
+			)}
+			{showAlert && (
+				<CloseIcon
+					size={18}
+					aria-label='close weather warning'
+					onClick={() => setShowAlert(!showAlert)}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							setShowAlert(!showAlert);
+						}
+					}}
+				/>
+			)}
+			{showAlert && <Alert alerts={alerts} timezoneOffset={timezoneOffset} />}
 			<CurrentlyDescription>
 				<img
 					src={convertIcon(current.weather[0].icon)}
@@ -62,6 +92,7 @@ const StyledCurrently = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative;
 `;
 
 const CurrentlyDescription = styled.div`
@@ -157,4 +188,25 @@ const CurrentlySun = styled.div`
 			margin-left: 0.5rem;
 		}
 	}
+`;
+
+const AlertIcon = styled(FiAlertTriangle)`
+	position: absolute;
+	top: -1rem;
+	left: 1rem;
+	font-size: 1.75rem;
+	color: white;
+	margin-right: 1rem;
+	cursor: pointer;
+`;
+
+const CloseIcon = styled(FiX)`
+	position: absolute;
+	top: -1rem;
+	left: 1rem;
+	font-size: 1.75rem;
+	color: white;
+	margin-right: 1rem;
+	cursor: pointer;
+	z-index: 50;
 `;
