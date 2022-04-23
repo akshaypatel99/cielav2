@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { formatDayDate } from '../utils/convertUnixTime';
+import CloseButton from './CloseButton';
 
 const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
 	useEffect(() => {
@@ -17,30 +18,36 @@ const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
 		};
 	}, [setShowAlert, showAlert]);
 
+	const closeAlertModal = () => {
+		setShowAlert(!showAlert);
+	};
+
 	let message;
 
 	if (Array.isArray(alerts)) {
-		message = alerts.map((alert) => (
-			<Message key={alert.start}>
+		message = alerts.map((alert, index) => (
+			<Message key={alert.start + index}>
 				<MessageContent>
 					<p>Sender: </p>
-					<h6>{alert.sender_name}</h6>
+					<p className='content'>{alert.sender_name}</p>
 				</MessageContent>
 				<MessageContent>
 					<p>Event: </p>
-					<h6>{alert.event}</h6>
+					<p className='content'>{alert.event}</p>
 				</MessageContent>
 				<MessageContent>
 					<p>Start: </p>
-					<h6>{formatDayDate(alert.start, timezoneOffset)}</h6>
+					<p className='content'>
+						{formatDayDate(alert.start, timezoneOffset)}
+					</p>
 				</MessageContent>
 				<MessageContent>
 					<p>End: </p>
-					<h6>{formatDayDate(alert.end, timezoneOffset)}</h6>
+					<p className='content'>{formatDayDate(alert.end, timezoneOffset)}</p>
 				</MessageContent>
 				<MessageContent>
 					<p>Description: </p>
-					<p>{alert.description}</p>
+					<p className='content'>{alert.description}</p>
 				</MessageContent>
 			</Message>
 		));
@@ -50,7 +57,14 @@ const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
 
 	return (
 		<CardShadow>
-			<StyledAlert>{message}</StyledAlert>
+			<AlertContainer>
+				<AlertHeader>
+					<div className='spacer' />
+					<AlertTitle>Weather Warning</AlertTitle>
+					<CloseButton onClick={closeAlertModal} />
+				</AlertHeader>
+				<StyledAlert>{message}</StyledAlert>
+			</AlertContainer>
 		</CardShadow>
 	);
 };
@@ -66,25 +80,56 @@ const CardShadow = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 5;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 
 	::-webkit-scrollbar {
 		display: none;
 	}
 `;
 
-const StyledAlert = styled.div`
-	max-width: 380px;
-	width: 90%;
-	max-height: 95%;
-	padding: 0.5rem;
-	position: absolute;
-	margin: 20vh auto 0;
-	z-index: 5;
+const AlertContainer = styled.div`
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+	height: 100%;
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 144px auto;
+`;
+
+const AlertHeader = styled.div`
 	display: flex;
+	width: 80%;
+	margin: 0 auto;
 	justify-content: center;
+	align-items: center;
+
+	.spacer {
+		width: 22px;
+		height: 22px;
+	}
+`;
+
+const AlertTitle = styled.h3`
+	font-size: 1.1rem;
+	font-family: 'SofiaProRegular';
+	flex: 1;
+	text-align: center;
+`;
+
+const StyledAlert = styled.div`
+	padding: 0 2rem 2rem;
+	overflow: auto;
+	position: relative;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+
+	& > * {
+		margin-bottom: 1rem;
+	}
 `;
 
 const Message = styled.div`
@@ -95,8 +140,14 @@ const Message = styled.div`
 
 const MessageContent = styled.div`
 	display: flex;
+	margin-bottom: 0.25rem;
 
 	p {
-		margin-right: 1rem;
+		font-size: 0.9rem;
+	}
+
+	.content {
+		font-family: 'SofiaProLight';
+		margin-left: 1rem;
 	}
 `;

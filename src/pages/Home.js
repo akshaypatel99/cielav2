@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import ErrorMessage from '../components/Error';
+import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import { useWeather } from '../context/WeatherContext';

@@ -5,7 +5,9 @@ import convertIcon from '../utils/convertIcon';
 import convertWindDirection from '../utils/convertWindDirection';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
-import { FiChevronsLeft, FiChevronsRight, FiX } from 'react-icons/fi';
+import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
+import CloseButton from './CloseButton';
+import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
 
 const DailyDetail = ({ pathId }) => {
 	const navigate = useNavigate();
@@ -56,122 +58,125 @@ const DailyDetail = ({ pathId }) => {
 	return (
 		<CardShadow className='shadow' onClick={exitDetailHandler}>
 			<DayDetail>
-				<>
-					<DailyDetailClose
+				<DailyHeader>
+					<CloseButton
 						ref={closeRef}
-						tabIndex='6'
-						onKeyDown={(event) => {
-							if (event.key === 'Enter') {
-								navigate('/');
-							}
-						}}
-					>
-						<FiX onClick={() => navigate('/')} />
-					</DailyDetailClose>
-
-					<DailyDetailMain>
-						<DailyDetailDay>
-							<h1>{formatDayDate(day.dt, timezoneOffset)}</h1>
-						</DailyDetailDay>
-						<DailyDetailDescription>
-							<h2>{day.weather[0].description}</h2>
-							<img
-								src={convertIcon(day.weather[0].icon)}
-								alt={day.weather[0].main}
-							/>
-						</DailyDetailDescription>
-						<DailyDetailTemp>
+						onClick={() => navigate('/')}
+						className='close'
+					/>
+				</DailyHeader>
+				<DailyDetailMain>
+					<DailyDetailDay>
+						<h1>{formatDayDate(day.dt, timezoneOffset)}</h1>
+					</DailyDetailDay>
+					<DailyDetailDescription>
+						<h2>{day.weather[0].description}</h2>
+						<img
+							src={convertIcon(day.weather[0].icon)}
+							alt={day.weather[0].main}
+						/>
+					</DailyDetailDescription>
+					<DailyDetailTemp>
+						<DailyDetailTempHigh>
+							<div className='icon'>
+								<BsChevronCompactUp size={20} />
+							</div>
 							<h3>
 								{Math.round(day.temp.max)}
 								<span>&#176;C</span>
 							</h3>
+						</DailyDetailTempHigh>
+						<DailyDetailTempLow>
 							<h4>
 								{Math.round(day.temp.min)}
 								<span>&#176;C</span>
 							</h4>
-						</DailyDetailTemp>
-					</DailyDetailMain>
+							<div className='icon'>
+								<BsChevronCompactDown size={20} />
+							</div>
+						</DailyDetailTempLow>
+					</DailyDetailTemp>
+				</DailyDetailMain>
 
-					<DailyDetailGrid>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Sunrise</DailyDetailCardTitle>
-							<DailyDetailCardContent>
-								{formatTime(day.sunrise, timezoneOffset)}
-							</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Sunset</DailyDetailCardTitle>
-							<DailyDetailCardContent>
-								{formatTime(day.sunset, timezoneOffset)}
-							</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>UV Index</DailyDetailCardTitle>
-							<DailyDetailCardContent>{day.uvi}</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Cloudiness</DailyDetailCardTitle>
-							<DailyDetailCardContent>{day.clouds}%</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Probability of Rain</DailyDetailCardTitle>
-							<DailyDetailCardContent>
-								{(day.pop * 100).toFixed(0)}%
-							</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Humidity</DailyDetailCardTitle>
-							<DailyDetailCardContent>{day.humidity}%</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Pressure</DailyDetailCardTitle>
-							<DailyDetailCardContent>
-								{day.pressure} hPa
-							</DailyDetailCardContent>
-						</DailyDetailCard>
-						<DailyDetailCard>
-							<DailyDetailCardTitle>Wind</DailyDetailCardTitle>
-							<DailyDetailCardContent className='wind'>
-								{Math.round(day.wind_speed * 2.237).toFixed(0)} mph{' '}
-								{convertWindDirection(day.wind_deg)} wind
-							</DailyDetailCardContent>
-						</DailyDetailCard>
-					</DailyDetailGrid>
+				<DailyDetailGrid>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Sunrise</DailyDetailCardTitle>
+						<DailyDetailCardContent>
+							{formatTime(day.sunrise, timezoneOffset)}
+						</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Sunset</DailyDetailCardTitle>
+						<DailyDetailCardContent>
+							{formatTime(day.sunset, timezoneOffset)}
+						</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>UV Index</DailyDetailCardTitle>
+						<DailyDetailCardContent>{day.uvi}</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Cloudiness</DailyDetailCardTitle>
+						<DailyDetailCardContent>{day.clouds}%</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Probability of Rain</DailyDetailCardTitle>
+						<DailyDetailCardContent>
+							{(day.pop * 100).toFixed(0)}%
+						</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Humidity</DailyDetailCardTitle>
+						<DailyDetailCardContent>{day.humidity}%</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Pressure</DailyDetailCardTitle>
+						<DailyDetailCardContent>{day.pressure} hPa</DailyDetailCardContent>
+					</DailyDetailCard>
+					<DailyDetailCard>
+						<DailyDetailCardTitle>Wind</DailyDetailCardTitle>
+						<DailyDetailCardContent className='wind'>
+							{Math.round(day.wind_speed * 2.237).toFixed(0)} mph{' '}
+							{convertWindDirection(day.wind_deg)} wind
+						</DailyDetailCardContent>
+					</DailyDetailCard>
+				</DailyDetailGrid>
 
-					<DailyDetailTempTable>
-						<colgroup span='3'></colgroup>
-						<thead>
-							<tr>
-								<th>Time</th>
-								<th>Temperature &#176;C</th>
-								<th>Feels Like &#176;C</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Morning</td>
-								<td className='number'>{Math.round(day.temp.morn)}</td>
-								<td className='number'>{Math.round(day.feels_like.morn)}</td>
-							</tr>
-							<tr>
-								<td>Day</td>
-								<td className='number'>{Math.round(day.temp.day)}</td>
-								<td className='number'>{Math.round(day.feels_like.day)}</td>
-							</tr>
-							<tr>
-								<td>Evening</td>
-								<td className='number'>{Math.round(day.temp.eve)}</td>
-								<td className='number'>{Math.round(day.feels_like.eve)}</td>
-							</tr>
+				<DailyDetailTempTable>
+					<colgroup span='3'></colgroup>
+					<thead>
+						<tr>
+							<th>Time</th>
+							<th>Temperature &#176;C</th>
+							<th>Feels Like &#176;C</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Morning</td>
+							<td className='number'>{Math.round(day.temp.morn)}</td>
+							<td className='number'>{Math.round(day.feels_like.morn)}</td>
+						</tr>
+						<tr>
+							<td>Day</td>
+							<td className='number'>{Math.round(day.temp.day)}</td>
+							<td className='number'>{Math.round(day.feels_like.day)}</td>
+						</tr>
+						<tr>
+							<td>Evening</td>
+							<td className='number'>{Math.round(day.temp.eve)}</td>
+							<td className='number'>{Math.round(day.feels_like.eve)}</td>
+						</tr>
 
-							<tr>
-								<td>Night</td>
-								<td className='number'>{Math.round(day.temp.night)}</td>
-								<td className='number'>{Math.round(day.feels_like.night)}</td>
-							</tr>
-						</tbody>
-					</DailyDetailTempTable>
+						<tr>
+							<td>Night</td>
+							<td className='number'>{Math.round(day.temp.night)}</td>
+							<td className='number'>{Math.round(day.feels_like.night)}</td>
+						</tr>
+					</tbody>
+				</DailyDetailTempTable>
 
+				<DailyFooter>
 					<DailyDetailNavPrev>
 						{index > 0 && (
 							<Link to={`/daily/${day.dt - 86400}`}>
@@ -186,7 +191,7 @@ const DailyDetail = ({ pathId }) => {
 							</Link>
 						)}
 					</DailyDetailNavNext>
-				</>
+				</DailyFooter>
 			</DayDetail>
 		</CardShadow>
 	);
@@ -213,7 +218,7 @@ const DayDetail = styled.div`
 	max-width: 380px;
 	width: 90%;
 	max-height: 95%;
-	padding: 1.5rem;
+	padding: 1rem;
 	position: absolute;
 	margin: auto;
 	top: 50%;
@@ -230,29 +235,23 @@ const DayDetail = styled.div`
 	box-shadow: 0 20px 40px hsl(0, 0%, 0%, 0.2);
 `;
 
-const DailyDetailClose = styled.div`
-	position: absolute;
-	top: 1.5rem;
-	right: 1rem;
-	cursor: pointer;
+const DailyHeader = styled.div`
+	display: flex;
+	justify-content: flex-end;
 `;
 
-const DailyDetailNavPrev = styled.div`
-	position: absolute;
-	bottom: 1rem;
-	left: 1rem;
+const DailyFooter = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;
-const DailyDetailNavNext = styled.div`
-	position: absolute;
-	bottom: 1rem;
-	right: 1rem;
-`;
+
+const DailyDetailNavPrev = styled.div``;
+const DailyDetailNavNext = styled.div``;
 
 const DailyDetailMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 0.5rem;
 `;
 
 const DailyDetailDay = styled.div`
@@ -282,21 +281,22 @@ const DailyDetailDescription = styled.div`
 `;
 
 const DailyDetailTemp = styled.div`
-	width: 160px;
+	width: 70%;
 	display: flex;
-	align-items: baseline;
-	justify-content: space-around;
+	align-items: stretch;
+	justify-content: space-between;
 	margin-top: 1rem;
+`;
 
-	h3,
-	h4 {
+const DailyDetailTempHigh = styled.div`
+	display: flex;
+	align-items: center;
+
+	h3 {
 		display: flex;
 		align-items: flex-start;
 		font-weight: 200;
 		font-family: 'SofiaProExtraLight';
-	}
-
-	h3 {
 		font-size: 3.5rem;
 
 		span {
@@ -307,7 +307,23 @@ const DailyDetailTemp = styled.div`
 		}
 	}
 
+	.icon {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		margin: 0 1rem;
+	}
+`;
+
+const DailyDetailTempLow = styled.div`
+	display: flex;
+	align-items: center;
+
 	h4 {
+		display: flex;
+		align-items: flex-start;
+		font-weight: 200;
 		font-size: 2.5rem;
 		font-family: 'SofiaProUltraLight';
 
@@ -317,6 +333,14 @@ const DailyDetailTemp = styled.div`
 			font-family: 'SofiaProUltraLight';
 			margin-top: 0.125rem;
 		}
+	}
+
+	.icon {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		margin: 0 1rem;
 	}
 `;
 

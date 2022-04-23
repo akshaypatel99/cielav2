@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
-import { FiAlertTriangle, FiSearch, FiX } from 'react-icons/fi';
+import { FiAlertTriangle, FiSearch } from 'react-icons/fi';
 import SearchModal from '../components/SearchModal';
 import AlertModal from './AlertModal';
 
@@ -35,19 +35,6 @@ const ModalOptions = () => {
 							}}
 						/>
 					)}
-					{showAlert && (
-						<CloseAlertModalIcon
-							size={22}
-							aria-label='close weather warning'
-							tabIndex='1'
-							onClick={() => setShowAlert(!showAlert)}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									setShowAlert(!showAlert);
-								}
-							}}
-						/>
-					)}
 				</StyledWeatherAlertIcon>
 
 				<StyledSearchIcon alertIsOpen={showAlert}>
@@ -62,19 +49,6 @@ const ModalOptions = () => {
 								}
 							}}
 							aria-label='open search modal'
-						/>
-					)}
-					{showSearchModal && (
-						<CloseSearchModalIcon
-							tabIndex='2'
-							size={22}
-							onClick={() => setShowSearchModal(!showSearchModal)}
-							onKeyUp={(event) => {
-								if (event.key === 'Enter') {
-									setShowSearchModal(!showSearchModal);
-								}
-							}}
-							aria-label='close search modal'
 						/>
 					)}
 				</StyledSearchIcon>
@@ -102,9 +76,7 @@ export default ModalOptions;
 const StyledOptions = styled.div`
 	width: 90%;
 	display: flex;
-	/* justify-content: space-between; */
 	margin-top: 1rem;
-	z-index: 10;
 `;
 
 const StyledWeatherAlertIcon = styled.div`
@@ -124,19 +96,7 @@ const AlertModalIcon = styled(FiAlertTriangle)`
 	cursor: pointer;
 `;
 
-const CloseAlertModalIcon = styled(FiX)`
-	color: white;
-	cursor: pointer;
-	z-index: 20;
-`;
-
 const SearchModalIcon = styled(FiSearch)`
 	color: white;
 	cursor: pointer;
-`;
-
-const CloseSearchModalIcon = styled(FiX)`
-	color: white;
-	cursor: pointer;
-	z-index: 20;
 `;

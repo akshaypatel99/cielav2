@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import convertIcon from '../utils/convertIcon';
-import {
-	FiChevronUp,
-	FiChevronDown,
-	FiSunrise,
-	FiSunset,
-} from 'react-icons/fi';
+import { FiSunrise, FiSunset } from 'react-icons/fi';
 import { formatTime } from '../utils/convertUnixTime';
+import ErrorMessage from './ErrorMessage';
+import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
 
 const Currently = () => {
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
 	const { current, daily, location, timezoneOffset } = weather;
+
+	if (!current)
+		return (
+			<ErrorMessage message='No current weather data available. Please try again or enter a new location.' />
+		);
 
 	return (
 		<StyledCurrently>
@@ -30,15 +32,15 @@ const Currently = () => {
 			<CurrentlyCity>{location}</CurrentlyCity>
 			<CurrentlyTempGrid>
 				<CurrentlyHigh>
-					<FiChevronUp />
+					<BsChevronCompactUp size={14} />
 					<p>{Math.round(daily[0].temp.max)}&#176;C</p>
 				</CurrentlyHigh>
 				<CurrentlyFeelsLike>
 					<p>Feels like {Math.round(current.feels_like)}&#176;C</p>
 				</CurrentlyFeelsLike>
 				<CurrentlyLow>
-					<FiChevronDown />
 					<p>{Math.round(daily[0].temp.min)}&#176;C</p>
+					<BsChevronCompactDown size={14} />
 				</CurrentlyLow>
 			</CurrentlyTempGrid>
 			<CurrentlySun>
@@ -105,6 +107,7 @@ const CurrentlyTemp = styled.h3`
 const CurrentlyCity = styled.h2`
 	font-size: 1rem;
 	margin-bottom: 0.5rem;
+	text-transform: capitalize;
 `;
 
 const CurrentlyTempGrid = styled.div`
@@ -132,6 +135,7 @@ const CurrentlyHigh = styled.div`
 
 	p {
 		font-size: 0.9rem;
+		margin-left: 0.5rem;
 	}
 `;
 
@@ -142,6 +146,7 @@ const CurrentlyLow = styled.div`
 
 	p {
 		font-size: 0.9rem;
+		margin-right: 0.5rem;
 	}
 `;
 

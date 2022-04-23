@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import { formatTime } from '../utils/convertUnixTime';
 import { rainfall, rainfallKey } from '../utils/rainfall';
+import ErrorMessage from './ErrorMessage';
 
 const Minutely = () => {
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
 	const { minutely, timezoneOffset } = weather;
+
+	if (!minutely)
+		return (
+			<ErrorMessage message='No rainfall data available. Please try again or enter a new location.' />
+		);
 
 	return (
 		<>

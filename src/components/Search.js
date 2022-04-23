@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
+import ErrorMessage from './ErrorMessage';
 
 const Search = ({ showSearch }) => {
 	const [showSearchInput, setShowSearchInput] = useState(false);
+	const [inputError, setInputError] = useState('');
 	const [city, setCity] = useState('');
 	const inputRef = useRef();
-
 	const { dispatch } = useWeather();
 
 	const handleCoords = (e) => {
@@ -21,7 +22,17 @@ const Search = ({ showSearch }) => {
 		if (city.length > 0) {
 			getCityWeather(city)(dispatch);
 		} else {
-			dispatch({ type: 'ERROR', error: 'Please enter a city' });
+			setInputError('Please enter a valid city');
+		}
+	};
+
+	const toggleSearchInput = () => {
+		if (showSearchInput) {
+			setShowSearchInput(false);
+			setCity('');
+			setInputError('');
+		} else {
+			setShowSearchInput(true);
 		}
 	};
 
@@ -50,11 +61,12 @@ const Search = ({ showSearch }) => {
 				<div className='vl'></div>
 
 				<SearchOption
+					aria-label='Search by city'
 					tabIndex='2'
-					onClick={() => setShowSearchInput(!showSearchInput)}
+					onClick={() => toggleSearchInput()}
 					onKeyUp={(event) => {
 						if (event.key === 'Enter') {
-							setShowSearchInput(!showSearchInput);
+							toggleSearchInput();
 						}
 					}}
 				>
@@ -75,7 +87,7 @@ const Search = ({ showSearch }) => {
 							tabIndex='3'
 							onKeyDown={(event) => {
 								if (event.key === 'Escape') {
-									setShowSearchInput(!showSearchInput);
+									toggleSearchInput();
 								}
 							}}
 						/>
@@ -95,6 +107,7 @@ const Search = ({ showSearch }) => {
 					<p>For best results, enter postcode, city & country.</p>
 				</SearchInput>
 			)}
+			{inputError && <ErrorMessage>{inputError}</ErrorMessage>}
 		</StyledSearch>
 	);
 };

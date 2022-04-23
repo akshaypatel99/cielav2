@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Header = () => {
@@ -10,7 +11,9 @@ const Header = () => {
 
 	return (
 		<StyledHeader>
-			<h1>Ciela</h1>
+			<Link to='/'>
+				<h1>Ciela</h1>
+			</Link>
 			<p>{today}</p>
 		</StyledHeader>
 	);
@@ -23,6 +26,10 @@ const StyledHeader = styled.header`
 	flex-direction: column;
 	align-items: center;
 	margin-top: 1vh;
+
+	a {
+		text-decoration: none;
+	}
 
 	h1 {
 		font-size: 1.5rem;

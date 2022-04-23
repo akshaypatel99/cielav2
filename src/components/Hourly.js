@@ -4,11 +4,17 @@ import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import convertIcon from '../utils/convertIcon';
 import { formatTime } from '../utils/convertUnixTime';
+import ErrorMessage from './ErrorMessage';
 
 const Hourly = () => {
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
 	const { hourly, timezoneOffset } = weather;
+
+	if (!hourly)
+		return (
+			<ErrorMessage message='No hourly weather data available. Please try again or enter a new location.' />
+		);
 
 	return (
 		<StyledHourly>

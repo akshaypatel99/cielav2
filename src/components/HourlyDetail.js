@@ -4,8 +4,9 @@ import { formatTime } from '../utils/convertUnixTime';
 import convertIcon from '../utils/convertIcon';
 import convertWindDirection from '../utils/convertWindDirection';
 import styled from 'styled-components';
-import { FiChevronsLeft, FiChevronsRight, FiX } from 'react-icons/fi';
+import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
+import CloseButton from './CloseButton';
 
 const HourlyDetail = ({ pathId }) => {
 	const navigate = useNavigate();
@@ -58,17 +59,13 @@ const HourlyDetail = ({ pathId }) => {
 	return (
 		<CardShadow className='shadow' onClick={exitDetailHandler}>
 			<HourDetail>
-				<HourlyDetailClose
-					ref={closeRef}
-					tabIndex='6'
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							navigate('/');
-						}
-					}}
-				>
-					<FiX onClick={() => navigate('/')} />
-				</HourlyDetailClose>
+				<HourlyHeader>
+					<CloseButton
+						ref={closeRef}
+						onClick={() => navigate('/')}
+						className='close'
+					/>
+				</HourlyHeader>
 
 				<HourlyDetailMain>
 					<HourlyDetailDay>
@@ -135,20 +132,22 @@ const HourlyDetail = ({ pathId }) => {
 					</HourlyDetailCard>
 				</HourlyDetailGrid>
 
-				<HourlyDetailNavPrev>
-					{index > 0 && (
-						<Link to={`/hourly/${hour.dt - 3600}`}>
-							<FiChevronsLeft />
-						</Link>
-					)}
-				</HourlyDetailNavPrev>
-				<HourlyDetailNavNext>
-					{index < 47 && (
-						<Link to={`/hourly/${hour.dt + 3600}`}>
-							<FiChevronsRight />
-						</Link>
-					)}
-				</HourlyDetailNavNext>
+				<HourlyFooter>
+					<HourlyDetailNavPrev>
+						{index > 0 && (
+							<Link to={`/hourly/${hour.dt - 3600}`}>
+								<FiChevronsLeft />
+							</Link>
+						)}
+					</HourlyDetailNavPrev>
+					<HourlyDetailNavNext>
+						{index < 47 && (
+							<Link to={`/hourly/${hour.dt + 3600}`}>
+								<FiChevronsRight />
+							</Link>
+						)}
+					</HourlyDetailNavNext>
+				</HourlyFooter>
 			</HourDetail>
 		</CardShadow>
 	);
@@ -175,7 +174,7 @@ const HourDetail = styled.div`
 	max-width: 380px;
 	width: 90%;
 	max-height: 90%;
-	padding: 1.5rem;
+	padding: 1rem;
 	position: absolute;
 	margin: auto;
 	top: 50%;
@@ -192,29 +191,23 @@ const HourDetail = styled.div`
 	box-shadow: 0 20px 40px hsl(0, 0%, 0%, 0.2);
 `;
 
-const HourlyDetailClose = styled.div`
-	position: absolute;
-	top: 1.5rem;
-	right: 1rem;
-	cursor: pointer;
+const HourlyHeader = styled.div`
+	display: flex;
+	justify-content: flex-end;
 `;
 
-const HourlyDetailNavPrev = styled.div`
-	position: absolute;
-	bottom: 1rem;
-	left: 1rem;
+const HourlyFooter = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;
-const HourlyDetailNavNext = styled.div`
-	position: absolute;
-	bottom: 1rem;
-	right: 1rem;
-`;
+
+const HourlyDetailNavPrev = styled.div``;
+const HourlyDetailNavNext = styled.div``;
 
 const HourlyDetailMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 0.5rem;
 `;
 
 const HourlyDetailDay = styled.div`

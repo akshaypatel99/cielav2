@@ -5,11 +5,17 @@ import { useWeather } from '../context/WeatherContext';
 import convertIcon from '../utils/convertIcon';
 import { formatDayDate } from '../utils/convertUnixTime';
 import { BsUmbrella } from 'react-icons/bs';
+import ErrorMessage from './ErrorMessage';
 
 const Daily = () => {
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
 	const { daily, timezoneOffset } = weather;
+
+	if (!daily)
+		return (
+			<ErrorMessage message='No daily weather data available. Please try again or enter a new location.' />
+		);
 
 	return (
 		<StyledDaily>
