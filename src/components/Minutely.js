@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import { formatTime } from '../utils/convertUnixTime';

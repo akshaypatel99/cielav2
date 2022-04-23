@@ -8,18 +8,11 @@ import { useWeather } from '../context/WeatherContext';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import CloseButton from './CloseButton';
 import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
+import ModalBackdrop from './ModalBackdrop';
 
 const DailyDetail = ({ pathId }) => {
 	const navigate = useNavigate();
 	const closeRef = useRef();
-
-	const exitDetailHandler = (e) => {
-		const element = e.target;
-		if (element.classList.contains('shadow')) {
-			document.body.style.overflow = 'auto';
-			navigate('/');
-		}
-	};
 
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
@@ -56,7 +49,7 @@ const DailyDetail = ({ pathId }) => {
 	}, [day.dt, index, navigate]);
 
 	return (
-		<CardShadow className='shadow' onClick={exitDetailHandler}>
+		<ModalBackdrop>
 			<DayDetail>
 				<DailyHeader>
 					<CloseButton
@@ -193,26 +186,11 @@ const DailyDetail = ({ pathId }) => {
 					</DailyDetailNavNext>
 				</DailyFooter>
 			</DayDetail>
-		</CardShadow>
+		</ModalBackdrop>
 	);
 };
 
 export default DailyDetail;
-
-const CardShadow = styled.div`
-	width: 100%;
-	height: 100%;
-	overflow-y: scroll;
-	background: hsla(219, 58%, 28%, 0.75);
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 5;
-
-	::-webkit-scrollbar {
-		display: none;
-	}
-`;
 
 const DayDetail = styled.div`
 	max-width: 380px;

@@ -7,18 +7,11 @@ import styled from 'styled-components';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import CloseButton from './CloseButton';
+import ModalBackdrop from './ModalBackdrop';
 
 const HourlyDetail = ({ pathId }) => {
 	const navigate = useNavigate();
 	const closeRef = useRef();
-
-	const exitDetailHandler = (e) => {
-		const element = e.target;
-		if (element.classList.contains('shadow')) {
-			document.body.style.overflow = 'auto';
-			navigate('/');
-		}
-	};
 
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
@@ -57,7 +50,7 @@ const HourlyDetail = ({ pathId }) => {
 	}, [hour.dt, index, navigate]);
 
 	return (
-		<CardShadow className='shadow' onClick={exitDetailHandler}>
+		<ModalBackdrop>
 			<HourDetail>
 				<HourlyHeader>
 					<CloseButton
@@ -149,26 +142,11 @@ const HourlyDetail = ({ pathId }) => {
 					</HourlyDetailNavNext>
 				</HourlyFooter>
 			</HourDetail>
-		</CardShadow>
+		</ModalBackdrop>
 	);
 };
 
 export default HourlyDetail;
-
-const CardShadow = styled.div`
-	width: 100%;
-	min-height: 100%;
-	overflow-y: scroll;
-	background: hsla(219, 58%, 28%, 0.75);
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 5;
-
-	::-webkit-scrollbar {
-		display: none;
-	}
-`;
 
 const HourDetail = styled.div`
 	max-width: 380px;
