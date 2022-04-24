@@ -26,7 +26,7 @@ const AlertMessage = ({ alert, timezoneOffset }) => {
 			</MessageContent>
 			<MessageContent>
 				<p>Tags: </p>
-				{alert.description.tags.map((tag, index) => (
+				{alert.tags.map((tag, index) => (
 					<p key={index} className='content'>
 						{tag}
 					</p>
