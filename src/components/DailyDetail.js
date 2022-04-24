@@ -69,26 +69,26 @@ const DailyDetail = ({ pathId }) => {
 							alt={day.weather[0].main}
 						/>
 					</DailyDetailDescription>
-					<DailyDetailTemp>
+					<DailyDetailTempGrid>
+						<div className='icon'>
+							<BsChevronCompactUp size={20} />
+						</div>
 						<DailyDetailTempHigh>
-							<div className='icon'>
-								<BsChevronCompactUp size={20} />
-							</div>
-							<h3>
+							<p>
 								{Math.round(day.temp.max)}
 								<span>&#176;C</span>
-							</h3>
+							</p>
 						</DailyDetailTempHigh>
 						<DailyDetailTempLow>
-							<h4>
+							<p>
 								{Math.round(day.temp.min)}
 								<span>&#176;C</span>
-							</h4>
-							<div className='icon'>
-								<BsChevronCompactDown size={20} />
-							</div>
+							</p>
 						</DailyDetailTempLow>
-					</DailyDetailTemp>
+						<div className='icon'>
+							<BsChevronCompactDown size={20} />
+						</div>
+					</DailyDetailTempGrid>
 				</DailyDetailMain>
 
 				<DailyDetailGrid>
@@ -258,19 +258,29 @@ const DailyDetailDescription = styled.div`
 	}
 `;
 
-const DailyDetailTemp = styled.div`
-	width: 70%;
-	display: flex;
-	align-items: stretch;
-	justify-content: space-between;
+const DailyDetailTempGrid = styled.div`
 	margin-top: 1rem;
+	display: grid;
+	grid-template-columns: 28px 84px 58px 28px;
+	grid-template-rows: 60px;
+	grid-column-gap: 1rem;
+	justify-items: center;
+	align-items: center;
+
+	.icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 const DailyDetailTempHigh = styled.div`
 	display: flex;
 	align-items: center;
 
-	h3 {
+	p {
 		display: flex;
 		align-items: flex-start;
 		font-weight: 200;
@@ -298,11 +308,11 @@ const DailyDetailTempLow = styled.div`
 	display: flex;
 	align-items: center;
 
-	h4 {
+	p {
 		display: flex;
 		align-items: flex-start;
-		font-weight: 200;
-		font-size: 2.5rem;
+		font-weight: 100;
+		font-size: 2.75rem;
 		font-family: 'SofiaProUltraLight';
 
 		span {
