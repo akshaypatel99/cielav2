@@ -29,7 +29,7 @@ const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
 		message = alerts.map((alert, index) => (
 			<AlertMessage
 				key={alert.start + index}
-				alert={alerts}
+				alert={alert}
 				timezoneOffset={timezoneOffset}
 			/>
 		));
@@ -93,8 +93,4 @@ const StyledAlert = styled.div`
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-
-	& > * {
-		margin-bottom: 1rem;
-	}
 `;

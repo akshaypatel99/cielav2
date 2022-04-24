@@ -42,6 +42,8 @@ const Message = styled.div`
 	max-width: 100%;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 1.25rem;
+	border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
 `;
 
 const MessageContent = styled.div`
