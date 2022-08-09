@@ -34,29 +34,29 @@ website that provided current, seven day, hourly and rainfall in
 the next hour in a clear, uncluttered and easy to read format,
 which I feel this build achieves.
 
-## Implementation
+## Implementation & Features
 
 #### STACK & APIS
 
 The front-end is built with React and Styled Components. Data is fetched from a serverless backend, built with Netlify Functions, and stored in the frontend using React Context. API calls are made in the backend to [OpenWeather](https://openweathermap.org/api) and [OpenCage](https://opencagedata.com/api).
 
-The user has two options to enter their location: a text box or a button to send their location. If the user chooses to manually input their location or search for weather at a different location, their text input is first sent to OpenCage. The OpenCage API receives street addresses and returns a lat/long pair. The lat/long coordinates are then used to fetch the weather data from OpenWeather.
+The user has two options to enter their location: a text input or a button to use their current location. If the user chooses to type their current location, or search for weather at a different location, their text input is first sent to OpenCage. The OpenCage API receives street addresses and returns lat/long coordinates, which are then used to fetch the weather data from OpenWeather.
 
 If the user chooses to share their location, the lat/long coordinates from the Window.navigator API are used to fetch the weather data from OpenWeather.
 
 #### NETLIFY FUNCTIONS
 
-I chose Netlify Functions because they are serverless AWS Lambda functions and allow you to have server-side code without having to run a dedicated server. They also keep API keys secure that would otherwise be exposed by React in the frontend.
+I chose Netlify Functions because they are serverless AWS Lambda functions that act as API endpoints, and they allow you to have a backend without having to run a dedicated server. They also keep API keys secure that would otherwise be exposed by React in the frontend.
 
 #### LAYOUT
 
-There are a couple of interesting techniques used in this simply designed project. One such technique was to display the Hourly and Daily Detail components as an overlay on top of the homepage, with a clickable background to return to the homepage. This would maintain the feel of a SPA, rather than a website with numerous pages.
+To display the Hourly and Daily Detail components, I chose to display the information in a modal with a clickable background to return to the homepage. This would maintain the feel of a SPA, rather than a website with numerous pages.
 
-The Daily and Hourly Detail components use their Unix Timestamp (received from the OpenWeather API) as a unique id. Each Day and Hour component is a clickable link that sets the URL parameters to the corresponding Unix Timestamp. When the URL path change is detected, the overlaying Detail component is displayed.
+The Hourly and Daily Detail components use their Unix Timestamp (received from the OpenWeather API) as a unique id. Each Day and Hour component is a clickable link that sets the URL parameters to the corresponding Unix Timestamp. When the URL path change is detected, the overlaying Detail component is displayed.
 
 #### RAIN FORECAST
 
-The other interesting technique was used in 'Rainfall in the Next Hour'. To display the expected rainfall in mm/hr for each minute, there are 60 individual divs representing each minute and they will have a background colour indicating how much rainfall is expected. They key for the chart is almost identical to that used by the Met Office.
+For 'Rainfall in the Next Hour' I decided to use a stacked horizontal bar chart that displays the expected rainfall in mm/hr for each minute. There are 60 individual divs representing each minute in the next hour and they will have a background colour indicating how much rainfall is expected. Inspiration for the key comes from a similar key used by the Met Office.
 
 ## Lessons Learned
 
