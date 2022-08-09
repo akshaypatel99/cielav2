@@ -1,8 +1,8 @@
 # Ciela
 
-**_A hyperlocal weather app built with React_**
+### **_A hyperlocal weather app built with React_**
 
-Check out the live site [**here**](https://tinyurl.com/ciela-weather).
+#### Check out the live site [**here**](https://tinyurl.com/ciela-weather).
 
 ## Project Overview
 
