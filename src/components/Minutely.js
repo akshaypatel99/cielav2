@@ -45,8 +45,7 @@ const Minutely = () => {
 												key={dp.dt}
 												style={{
 													background: `${rainfall(dp.precipitation)}`,
-												}}
-											></MinutelyDataPoint>
+												}}></MinutelyDataPoint>
 										);
 									} else {
 										return (
@@ -54,8 +53,7 @@ const Minutely = () => {
 												key={dp.dt}
 												style={{
 													background: 'hsla(190, 100%, 100%, 0.2)',
-												}}
-											></MinutelyDataPoint>
+												}}></MinutelyDataPoint>
 										);
 									}
 								})}
@@ -74,7 +72,9 @@ const Minutely = () => {
 								<p>{formatTime(minutely[45].dt, timezoneOffset)}</p>
 							</div>
 							<div className='increments'>
-								<p>{formatTime(minutely[60].dt, timezoneOffset)}</p>
+								<p>
+									{formatTime(minutely[59].dt + 60, timezoneOffset)}
+								</p>
 							</div>
 						</Scale>
 						<Key>
@@ -89,8 +89,7 @@ const Minutely = () => {
 											className='color'
 											style={{
 												background: `${el.color}`,
-											}}
-										></div>
+											}}></div>
 										<div className='amount'>
 											<p>{el.amount}</p>
 										</div>

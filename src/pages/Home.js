@@ -31,14 +31,20 @@ export default function Home() {
 
 	return (
 		<StyledHome>
-			{pathDiv === 'daily' && pathId && <DailyDetail pathId={pathId} />}
-			{pathDiv === 'hourly' && pathId && <HourlyDetail pathId={pathId} />}
+			{pathDiv === 'daily' && pathId && (
+				<DailyDetail pathId={pathId} />
+			)}
+			{pathDiv === 'hourly' && pathId && (
+				<HourlyDetail pathId={pathId} />
+			)}
 
 			<Header />
 			<Search showSearch={showSearch} />
 			<Results>
 				{status === 'loading' && <Loading />}
-				{status === 'rejected' && error && <ErrorMessage error={error} />}
+				{status === 'rejected' && error && (
+					<ErrorMessage error={error} />
+				)}
 				{status === 'resolved' && weather && (
 					<>
 						<ModalOptions />
