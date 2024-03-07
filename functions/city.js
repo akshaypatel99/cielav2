@@ -3,7 +3,7 @@ const axios = require('axios');
 const fetchLatLong = async (city) => {
 	return await axios
 		.get(
-			`https://api.opencagedata.com/geocode/v1/json?q=${city}&limit=1&key=${process.env.REACT_OPENCAGE_KEY}123`
+			`https://api.opencagedata.com/geocode/v1/json?q=${city}&limit=1&key=${process.env.REACT_OPENCAGE_KEY}`
 		)
 		.then((response) => {
 			return {
@@ -65,19 +65,25 @@ exports.handler = async function (event, context) {
 				console.log('Status: ', error.response.status);
 				return {
 					statusCode: error?.response?.status,
-					body: JSON.stringify({ message: error?.response?.data.message }),
+					body: JSON.stringify({
+						message: error?.response?.data.message,
+					}),
 				};
 			} else if (error.request) {
 				console.log(error.request);
 				return {
 					statusCode: error?.response?.status,
-					body: JSON.stringify({ message: error?.response?.data.message }),
+					body: JSON.stringify({
+						message: error?.response?.data.message,
+					}),
 				};
 			} else {
 				console.log('Error', error.message);
 				return {
 					statusCode: error?.response?.status,
-					body: JSON.stringify({ message: error?.response?.data.message }),
+					body: JSON.stringify({
+						message: error?.response?.data.message,
+					}),
 				};
 			}
 		});
