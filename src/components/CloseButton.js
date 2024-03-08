@@ -4,11 +4,9 @@ import styled from 'styled-components';
 
 const CloseButton = React.forwardRef(({ onClick }, ref) => (
 	<StyledCloseButton
-		tabIndex='2'
 		aria-label='Close modal'
 		onClick={onClick}
-		ref={ref}
-	>
+		ref={ref}>
 		<CloseSearchModalIcon size={22} />
 	</StyledCloseButton>
 ));
@@ -16,8 +14,7 @@ const CloseButton = React.forwardRef(({ onClick }, ref) => (
 export default CloseButton;
 
 const StyledCloseButton = styled.button`
-	background: transparent;
-	border: none;
+	padding: 0.25rem;
 `;
 
 const CloseSearchModalIcon = styled(FiX)`
