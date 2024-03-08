@@ -1,27 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import AlertMessage from './AlertMessage';
 import CloseButton from './CloseButton';
-import ModalBackdrop from './ModalBackdrop';
+import Modal from './Modal';
+import { useWeather } from '../context/WeatherContext';
 
-const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
+const AlertModal = ({ showAlert, toggleAlert }) => {
+	const { weatherState } = useWeather();
+	const { weather } = weatherState;
+	const { alerts, timezoneOffset } = weather;
+	const closeRef = useRef();
+
 	useEffect(() => {
-		function onKeyDown(event) {
-			const escape = event.key === 'Escape';
-			if (escape) {
-				setShowAlert(!showAlert);
-			}
-		}
-		document.body.addEventListener('keydown', onKeyDown);
-
-		return () => {
-			document.body.removeEventListener('keydown', onKeyDown);
-		};
-	}, [setShowAlert, showAlert]);
-
-	const closeAlertModal = () => {
-		setShowAlert(!showAlert);
-	};
+		closeRef.current.focus();
+	}, []);
 
 	let message;
 
@@ -38,16 +30,21 @@ const AlertModal = ({ alerts, timezoneOffset, showAlert, setShowAlert }) => {
 	}
 
 	return (
-		<ModalBackdrop>
+		<Modal
+			openModal={showAlert}
+			closeModal={toggleAlert}>
 			<AlertContainer>
 				<AlertHeader>
 					<div className='spacer' />
 					<AlertTitle>Weather Warning</AlertTitle>
-					<CloseButton onClick={closeAlertModal} />
+					<CloseButton
+						onClick={toggleAlert}
+						ref={closeRef}
+					/>
 				</AlertHeader>
 				<StyledAlert>{message}</StyledAlert>
 			</AlertContainer>
-		</ModalBackdrop>
+		</Modal>
 	);
 };
 
@@ -61,19 +58,19 @@ const AlertContainer = styled.div`
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 144px auto;
+	grid-template-rows: 180px auto;
 `;
 
 const AlertHeader = styled.div`
 	display: flex;
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 	justify-content: center;
 	align-items: center;
 
 	.spacer {
-		width: 22px;
-		height: 22px;
+		width: 32px;
+		height: 35px;
 	}
 `;
 

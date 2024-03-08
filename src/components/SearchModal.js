@@ -1,47 +1,41 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import Search from './Search';
 import ErrorMessage from './ErrorMessage';
 import Loading from './Loading';
 import CloseButton from './CloseButton';
-import ModalBackdrop from './ModalBackdrop';
+import Modal from './Modal';
 
-const SearchModal = ({ showSearchModal, setShowSearchModal }) => {
+const SearchModal = ({ showSearchModal, toggleSearchModal }) => {
 	const { weatherState } = useWeather();
 	const { status, error } = weatherState;
-
-	const closeSearchModal = () => {
-		setShowSearchModal(!showSearchModal);
-	};
+	const closeRef = useRef();
 
 	useEffect(() => {
-		function onKeyDown(event) {
-			const escape = event.key === 'Escape';
-			if (escape) {
-				setShowSearchModal(!showSearchModal);
-			}
-		}
-		document.body.addEventListener('keydown', onKeyDown);
-
-		return () => {
-			document.body.removeEventListener('keydown', onKeyDown);
-		};
-	}, [setShowSearchModal, showSearchModal]);
+		closeRef.current.focus();
+	}, []);
 
 	return (
-		<ModalBackdrop>
+		<Modal
+			openModal={showSearchModal}
+			closeModal={toggleSearchModal}>
 			<SearchModalContainer>
 				<SearchHeader>
 					<div className='spacer' />
 					<SearchTitle>Search</SearchTitle>
-					<CloseButton onClick={closeSearchModal} />
+					<CloseButton
+						ref={closeRef}
+						onClick={toggleSearchModal}
+					/>
 				</SearchHeader>
 				<Search showSearch={true} />
 				{status === 'loading' && <Loading />}
-				{status === 'rejected' && error && <ErrorMessage error={error} />}
+				{status === 'rejected' && error && (
+					<ErrorMessage error={error} />
+				)}
 			</SearchModalContainer>
-		</ModalBackdrop>
+		</Modal>
 	);
 };
 
@@ -55,19 +49,19 @@ const SearchModalContainer = styled.div`
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 144px auto;
+	grid-template-rows: 180px auto;
 `;
 
 const SearchHeader = styled.div`
 	display: flex;
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 	justify-content: center;
 	align-items: center;
 
 	.spacer {
-		width: 22px;
-		height: 22px;
+		width: 32px;
+		height: 35px;
 	}
 `;
 

@@ -10,7 +10,7 @@ const ModalOptions = () => {
 	const [showAlert, setShowAlert] = useState(false);
 	const { weatherState } = useWeather();
 	const { weather } = weatherState;
-	const { status, alerts, timezoneOffset } = weather;
+	const { status } = weather;
 
 	useEffect(() => {
 		if (status === 'resolved' && weather) {
@@ -18,53 +18,43 @@ const ModalOptions = () => {
 		}
 	}, [status, weather]);
 
+	function toggleAlertModal() {
+		setShowAlert(!showAlert);
+	}
+
+	function toggleSearchModal() {
+		setShowSearchModal(!showSearchModal);
+	}
+
 	return (
 		<>
 			<StyledOptions>
-				<StyledWeatherAlertIcon searchIsOpen={showSearchModal}>
-					{!showAlert && (
-						<AlertModalIcon
-							size={22}
-							aria-label='open weather warning'
-							tabIndex='1'
-							onClick={() => setShowAlert(!showAlert)}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter') {
-									setShowAlert(!showAlert);
-								}
-							}}
-						/>
-					)}
-				</StyledWeatherAlertIcon>
+				<WeatherAlertButton onClick={toggleAlertModal}>
+					<AlertModalIcon
+						size={22}
+						aria-label='open weather warning'
+					/>
+				</WeatherAlertButton>
 
-				<StyledSearchIcon alertIsOpen={showAlert}>
-					{!showSearchModal && (
-						<SearchModalIcon
-							tabIndex='2'
-							size={22}
-							onClick={() => setShowSearchModal(!showSearchModal)}
-							onKeyUp={(event) => {
-								if (event.key === 'Enter') {
-									setShowSearchModal(!showSearchModal);
-								}
-							}}
-							aria-label='open search modal'
-						/>
-					)}
-				</StyledSearchIcon>
+				<SearchButton onClick={toggleSearchModal}>
+					<SearchModalIcon
+						size={22}
+						aria-label='open search modal'
+					/>
+				</SearchButton>
 			</StyledOptions>
+
 			{showAlert && (
 				<AlertModal
-					alerts={alerts}
-					timezoneOffset={timezoneOffset}
 					showAlert={showAlert}
-					setShowAlert={setShowAlert}
+					toggleAlert={toggleAlertModal}
 				/>
 			)}
+
 			{showSearchModal && (
 				<SearchModal
 					showSearchModal={showSearchModal}
-					setShowSearchModal={setShowSearchModal}
+					toggleSearchModal={toggleSearchModal}
 				/>
 			)}
 		</>
@@ -79,14 +69,12 @@ const StyledOptions = styled.div`
 	margin-top: 1rem;
 `;
 
-const StyledWeatherAlertIcon = styled.div`
-	display: ${(props) => (props.searchIsOpen ? 'none' : 'flex')};
+const WeatherAlertButton = styled.button`
 	margin-left: 0;
 	margin-right: auto;
 `;
 
-const StyledSearchIcon = styled.div`
-	display: ${(props) => (props.alertIsOpen ? 'none' : 'flex')};
+const SearchButton = styled.button`
 	margin-left: auto;
 	margin-right: 0;
 `;
