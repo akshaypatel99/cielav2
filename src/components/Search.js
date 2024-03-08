@@ -5,7 +5,7 @@ import { useWeather } from '../context/WeatherContext';
 import {
 	getCityWeather,
 	getCoordsWeather,
-} from '../context/weatherReducer';
+} from '../utils/fetchWeather';
 import ErrorMessage from './ErrorMessage';
 
 const Search = ({ showSearch }) => {
