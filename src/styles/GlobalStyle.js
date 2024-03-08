@@ -7,28 +7,28 @@ import SofiaProUltraLight from '../assets/fonts/SofiaProUltraLight.woff2';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'SofiaProRegular';
+    font-family: 'SofiaPro';
     src: local('SofiaProRegular'), url(${SofiaProRegular}) format('woff2');
     font-weight: 400;
     font-style: normal;
   }
   
   @font-face {
-    font-family: 'SofiaProLight';
+    font-family: 'SofiaPro';
     src: local('SofiaProLight'), url(${SofiaProLight}) format('woff2');
     font-weight: 300;
     font-style: normal;
   }
   
   @font-face {
-    font-family: 'SofiaProExtraLight';
+    font-family: 'SofiaPro';
     src: local('SofiaProExtraLight'), url(${SofiaProExtraLight}) format('woff2');
     font-weight: 200;
     font-style: normal;
   }
   
   @font-face {
-    font-family: 'SofiaProUltraLight';
+    font-family: 'SofiaPro';
     src: local('SofiaProUltraLight'), url(${SofiaProUltraLight}) format('woff2');
     font-weight: 100;
     font-style: normal;
@@ -38,7 +38,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'SofiaProRegular', sans-serif;
+    font-family: 'SofiaPro', sans-serif;
     font-weight: 300;
     color: hsl(0, 100%, 100%);
   }

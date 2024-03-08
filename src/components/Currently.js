@@ -4,7 +4,10 @@ import convertIcon from '../utils/convertIcon';
 import { FiSunrise, FiSunset } from 'react-icons/fi';
 import { formatTime } from '../utils/convertUnixTime';
 import ErrorMessage from './ErrorMessage';
-import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
+import {
+	BsChevronCompactDown,
+	BsChevronCompactUp,
+} from 'react-icons/bs';
 
 const Currently = () => {
 	const { weatherState } = useWeather();
@@ -45,10 +48,12 @@ const Currently = () => {
 			</CurrentlyTempGrid>
 			<CurrentlySun>
 				<div>
-					<FiSunrise /> <p>{formatTime(current.sunrise, timezoneOffset)}</p>
+					<FiSunrise />{' '}
+					<p>{formatTime(current.sunrise, timezoneOffset)}</p>
 				</div>
 				<div>
-					<FiSunset /> <p>{formatTime(current.sunset, timezoneOffset)}</p>
+					<FiSunset />{' '}
+					<p>{formatTime(current.sunset, timezoneOffset)}</p>
 				</div>
 			</CurrentlySun>
 		</StyledCurrently>
@@ -75,7 +80,6 @@ const CurrentlyDescription = styled.div`
 		text-transform: capitalize;
 		font-size: 1.125rem;
 		font-weight: 400;
-		font-family: 'SofiaProRegular';
 		margin-top: 0.25rem;
 	}
 
@@ -92,14 +96,12 @@ const CurrentlyTemp = styled.h3`
 	margin-bottom: 1rem;
 	font-size: 4.5rem;
 	font-weight: 200;
-	font-family: 'SofiaProExtraLight';
 	display: flex;
 	align-items: flex-start;
 
 	span {
 		font-size: 2rem;
 		font-weight: 100;
-		font-family: 'SofiaProUltraLight';
 		margin-top: 0.25rem;
 	}
 `;

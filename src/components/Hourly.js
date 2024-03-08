@@ -22,8 +22,7 @@ const Hourly = () => {
 					hourly.map((dp) => (
 						<HourlySummary
 							key={dp.dt}
-							newDay={formatTime(dp.dt, timezoneOffset) === '00:00'}
-						>
+							newDay={formatTime(dp.dt, timezoneOffset) === '00:00'}>
 							<Link to={`/hourly/${dp.dt}`}>
 								<h5>{formatTime(dp.dt, timezoneOffset)}</h5>
 								<img
@@ -79,7 +78,6 @@ const HourlySummary = styled.div`
 
 	h5 {
 		font-weight: 400;
-		font-family: 'SofiaProRegular';
 		color: ${({ newDay }) => (newDay ? '#ffcc00' : '#fff')};
 	}
 `;

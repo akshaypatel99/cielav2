@@ -33,12 +33,10 @@ const StyledHeader = styled.header`
 	h1 {
 		font-size: 1.5rem;
 		font-weight: 200;
-		font-family: 'SofiaProExtraLight';
 		margin-bottom: 0.75rem;
 	}
 
 	p {
 		font-weight: 400;
-		font-family: 'SofiaProRegular';
 	}
 `;

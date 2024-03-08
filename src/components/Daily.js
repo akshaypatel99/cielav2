@@ -42,7 +42,9 @@ const Daily = () => {
 										src={convertIcon(dp.weather[0].icon)}
 										alt={dp.weather[0].main}
 									/>
-									<DailyGridRain>{(dp.pop * 100).toFixed(0)}%</DailyGridRain>
+									<DailyGridRain>
+										{(dp.pop * 100).toFixed(0)}%
+									</DailyGridRain>
 									<DailyGridTempHigh>
 										<p>{Math.round(dp.temp.max)}&#176;C</p>
 									</DailyGridTempHigh>
@@ -106,7 +108,6 @@ const DailyGrid = styled.div`
 const DailyGridDay = styled.p`
 	margin-left: 0.5rem;
 	font-weight: 400;
-	font-family: 'SofiaProRegular'; ;
 `;
 
 const DailyGridRain = styled.p`
@@ -114,7 +115,6 @@ const DailyGridRain = styled.p`
 	justify-content: center;
 	align-items: center;
 	font-weight: 200;
-	font-family: 'SofiaProExtraLight';
 
 	svg {
 		margin-right: 0.25rem;

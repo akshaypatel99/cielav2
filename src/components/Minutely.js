@@ -116,7 +116,6 @@ const StyledMinutely = styled.section`
 
 	p {
 		font-weight: 400;
-		font-family: 'SofiaProRegular';
 		font-size: 0.9rem;
 	}
 `;

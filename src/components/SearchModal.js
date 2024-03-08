@@ -67,7 +67,7 @@ const SearchHeader = styled.div`
 
 const SearchTitle = styled.h3`
 	font-size: 1.1rem;
-	font-family: 'SofiaProRegular';
+	font-weight: 400;
 	flex: 1;
 	text-align: center;
 `;

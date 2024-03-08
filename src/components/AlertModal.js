@@ -76,7 +76,6 @@ const AlertHeader = styled.div`
 
 const AlertTitle = styled.h3`
 	font-size: 1.1rem;
-	font-family: 'SofiaProRegular';
 	flex: 1;
 	text-align: center;
 `;
@@ -90,4 +89,8 @@ const StyledAlert = styled.div`
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+
+	h5 {
+		font-size: 1rem;
+	}
 `;
