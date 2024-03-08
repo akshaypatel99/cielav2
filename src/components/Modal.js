@@ -33,6 +33,11 @@ const Dialog = styled.dialog`
 	background-color: transparent;
 	border: transparent;
 
+	:modal {
+		max-width: 100vw;
+		max-height: 100vh;
+	}
+
 	::backdrop {
 		background: hsla(219, 58%, 28%, 0.95);
 	}
