@@ -50,4 +50,14 @@ export const GlobalStyle = createGlobalStyle`
   body {
     scroll-behavior: smooth;
   }
+
+  button, input {
+    background: none;
+    border: 1px solid transparent;
+  }
+
+  button:focus-visible {
+    border: 1px solid #ffcc00;
+    border-radius: 2px;
+  }
 `;
