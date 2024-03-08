@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FiMapPin, FiSearch } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
-import { getCityWeather, getCoordsWeather } from '../context/weatherReducer';
+import {
+	getCityWeather,
+	getCoordsWeather,
+} from '../context/weatherReducer';
 import ErrorMessage from './ErrorMessage';
 
 const Search = ({ showSearch }) => {
@@ -46,32 +49,34 @@ const Search = ({ showSearch }) => {
 		<StyledSearch showSearch={showSearch}>
 			<SearchOptions>
 				<SearchOption
-					tabIndex='1'
 					onClick={handleCoords}
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
 							handleCoords();
 						}
-					}}
-				>
-					<FiMapPin color='#fff' size={28} />
-					<p>Location</p>
+					}}>
+					<FiMapPin
+						color='#fff'
+						size={28}
+					/>
+					Location
 				</SearchOption>
 
 				<div className='vl'></div>
 
 				<SearchOption
 					aria-label='Search by city'
-					tabIndex='2'
 					onClick={() => toggleSearchInput()}
 					onKeyUp={(event) => {
 						if (event.key === 'Enter') {
 							toggleSearchInput();
 						}
-					}}
-				>
-					<FiSearch color='#fff' size={28} />
-					<p>Search</p>
+					}}>
+					<FiSearch
+						color='#fff'
+						size={28}
+					/>
+					Search
 				</SearchOption>
 			</SearchOptions>
 			{showSearchInput && (
@@ -84,7 +89,6 @@ const Search = ({ showSearch }) => {
 							value={city}
 							onChange={(event) => setCity(event.target.value)}
 							ref={inputRef}
-							tabIndex='3'
 							onKeyDown={(event) => {
 								if (event.key === 'Escape') {
 									toggleSearchInput();
@@ -99,8 +103,7 @@ const Search = ({ showSearch }) => {
 								}
 							}}
 							onTouchStart={handleCity}
-							type='submit'
-						>
+							type='submit'>
 							Get Weather
 						</button>
 					</form>
@@ -130,27 +133,26 @@ const SearchOptions = styled.div`
 	margin: 0 auto;
 
 	.vl {
-		background-color: hsla(0, 0%, 100%, 0.2);
+		background-color: hsla(0, 0%, 100%, 0.3);
 		width: 1px;
 		height: 100%;
 		margin: 0 2rem;
 	}
 `;
 
-const SearchOption = styled.div`
+const SearchOption = styled.button`
+	background: none;
+	border: transparent;
 	display: flex;
 	flex-direction: column;
-	width: 50%;
+	width: 100px;
 	height: 100%;
 	align-items: center;
 	justify-content: center;
+	gap: 1rem;
 	cursor: pointer;
-
-	p {
-		margin-top: 0.75rem;
-		font-size: 1rem;
-		font-weight: 300;
-	}
+	font-size: 1rem;
+	font-weight: 300;
 `;
 
 const SearchInput = styled.div`
@@ -164,28 +166,27 @@ const SearchInput = styled.div`
 		padding: 0.5rem;
 		background: hsla(208, 21%, 88%, 0.2);
 		outline: 1px solid hsla(0, 0%, 100%, 0.9);
+		border-radius: 2px;
+
+		:focus {
+			outline: 1px solid #ffcc00;
+		}
 	}
 
 	input {
-		background: transparent;
-		border: none;
 		outline: none;
 		text-align: center;
 		text-transform: capitalize;
-		font-size: 1rem;
+		font-size: 1.1rem;
 		font-weight: 400;
 		font-family: 'SofiaProRegular';
 		margin-top: 0.125rem;
-		padding: 0.25rem 0.5rem;
+		padding: 0.5rem 0.5rem;
 		width: 100%;
 
-		&:focus {
-			background: none;
-		}
-
 		&::placeholder {
-			color: hsla(0, 0%, 100%, 0.9);
-			font-size: 1rem;
+			color: hsla(0, 0%, 100%, 0.8);
+			font-size: 1.1rem;
 		}
 	}
 
@@ -195,7 +196,7 @@ const SearchInput = styled.div`
 
 	p {
 		text-align: center;
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 		font-weight: 200;
 		font-family: 'SofiaProExtraLight';
 		padding-top: 0.75rem;
