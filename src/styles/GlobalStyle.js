@@ -51,24 +51,24 @@ export const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
-  button, input {
+  button, input, a {
     background: none;
     border: 1px solid transparent;
   }
 
-  button:focus-visible {
+  button:focus-visible, a:focus-visible {
     border: 1px solid #ffcc00;
     border-radius: 2px;
   }
 
   .visually-hidden {
-    display: 'inline-block';
-    position: 'absolute';
-    overflow: 'hidden';
-    clip: 'rect(0 0 0 0)';
-    height: 1;
-    width: 1;
-    margin: -1;
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
     padding: 0;
     border: 0;
   }
