@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 import CloseButton from './CloseButton';
-import ModalBackdrop from './ModalBackdrop';
+import Modal from './Modal';
+import VisuallyHidden from './VisuallyHidden';
 
-const HourlyDetail = ({ pathId }) => {
+const HourlyDetail = ({ openModal, pathId }) => {
 	const navigate = useNavigate();
 	const closeRef = useRef();
 
@@ -30,13 +31,10 @@ const HourlyDetail = ({ pathId }) => {
 
 	useEffect(() => {
 		function onKeyDown(event) {
-			const escape = event.key === 'Escape';
 			const isLeft = event.key === 'ArrowLeft';
 			const isRight = event.key === 'ArrowRight';
 
-			if (escape) {
-				navigate('/');
-			} else if (index > 0 && isLeft) {
+			if (index > 0 && isLeft) {
 				navigate(`/hourly/${hour.dt - 3600}`);
 			} else if (index < 47 && isRight) {
 				navigate(`/hourly/${hour.dt + 3600}`);
@@ -50,7 +48,9 @@ const HourlyDetail = ({ pathId }) => {
 	}, [hour.dt, index, navigate]);
 
 	return (
-		<ModalBackdrop>
+		<Modal
+			openModal={openModal}
+			closeModal={() => navigate('/')}>
 			<HourDetail>
 				<HourlyHeader>
 					<CloseButton
@@ -134,23 +134,25 @@ const HourlyDetail = ({ pathId }) => {
 				</HourlyDetailGrid>
 
 				<HourlyFooter>
-					<HourlyDetailNavPrev>
+					<HourlyDetailNav>
 						{index > 0 && (
 							<Link to={`/hourly/${hour.dt - 3600}`}>
-								<FiChevronsLeft />
+								<FiChevronsLeft size={22} />
+								<VisuallyHidden>Previous hour</VisuallyHidden>
 							</Link>
 						)}
-					</HourlyDetailNavPrev>
-					<HourlyDetailNavNext>
+					</HourlyDetailNav>
+					<HourlyDetailNav>
 						{index < 47 && (
 							<Link to={`/hourly/${hour.dt + 3600}`}>
-								<FiChevronsRight />
+								<VisuallyHidden>Next hour</VisuallyHidden>
+								<FiChevronsRight size={22} />
 							</Link>
 						)}
-					</HourlyDetailNavNext>
+					</HourlyDetailNav>
 				</HourlyFooter>
 			</HourDetail>
-		</ModalBackdrop>
+		</Modal>
 	);
 };
 
@@ -185,10 +187,16 @@ const HourlyHeader = styled.div`
 const HourlyFooter = styled.div`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 `;
 
-const HourlyDetailNavPrev = styled.div``;
-const HourlyDetailNavNext = styled.div``;
+const HourlyDetailNav = styled.div`
+	a {
+		display: flex;
+		align-items: center;
+		padding: 0.25rem;
+	}
+`;
 
 const HourlyDetailMain = styled.div`
 	display: flex;
@@ -246,7 +254,7 @@ const HourlyDetailTemp = styled.div`
 `;
 
 const HourlyDetailGrid = styled.div`
-	width: 90%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	display: grid;

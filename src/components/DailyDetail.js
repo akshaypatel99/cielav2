@@ -7,10 +7,14 @@ import styled from 'styled-components';
 import { useWeather } from '../context/WeatherContext';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import CloseButton from './CloseButton';
-import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
-import ModalBackdrop from './ModalBackdrop';
+import {
+	BsChevronCompactDown,
+	BsChevronCompactUp,
+} from 'react-icons/bs';
+import Modal from './Modal';
+import VisuallyHidden from './VisuallyHidden';
 
-const DailyDetail = ({ pathId }) => {
+const DailyDetail = ({ openModal, pathId }) => {
 	const navigate = useNavigate();
 	const closeRef = useRef();
 
@@ -18,7 +22,9 @@ const DailyDetail = ({ pathId }) => {
 	const { weather } = weatherState;
 	const { daily, timezoneOffset } = weather;
 
-	const day = daily.filter((day) => day.dt.toString() === pathId.toString())[0];
+	const day = daily.filter(
+		(day) => day.dt.toString() === pathId.toString()
+	)[0];
 	const index = daily.findIndex(
 		(day) => day.dt.toString() === pathId.toString()
 	);
@@ -29,13 +35,10 @@ const DailyDetail = ({ pathId }) => {
 
 	useEffect(() => {
 		function onKeyDown(event) {
-			const escape = event.key === 'Escape';
 			const isLeft = event.key === 'ArrowLeft';
 			const isRight = event.key === 'ArrowRight';
 
-			if (escape) {
-				navigate('/');
-			} else if (index > 0 && isLeft) {
+			if (index > 0 && isLeft) {
 				navigate(`/daily/${day.dt - 86400}`);
 			} else if (index < 7 && isRight) {
 				navigate(`/daily/${day.dt + 86400}`);
@@ -49,7 +52,9 @@ const DailyDetail = ({ pathId }) => {
 	}, [day.dt, index, navigate]);
 
 	return (
-		<ModalBackdrop>
+		<Modal
+			openModal={openModal}
+			closeModal={() => navigate('/')}>
 			<DayDetail>
 				<DailyHeader>
 					<CloseButton
@@ -110,21 +115,29 @@ const DailyDetail = ({ pathId }) => {
 					</DailyDetailCard>
 					<DailyDetailCard>
 						<DailyDetailCardTitle>Cloudiness</DailyDetailCardTitle>
-						<DailyDetailCardContent>{day.clouds}%</DailyDetailCardContent>
+						<DailyDetailCardContent>
+							{day.clouds}%
+						</DailyDetailCardContent>
 					</DailyDetailCard>
 					<DailyDetailCard>
-						<DailyDetailCardTitle>Probability of Rain</DailyDetailCardTitle>
+						<DailyDetailCardTitle>
+							Probability of Rain
+						</DailyDetailCardTitle>
 						<DailyDetailCardContent>
 							{(day.pop * 100).toFixed(0)}%
 						</DailyDetailCardContent>
 					</DailyDetailCard>
 					<DailyDetailCard>
 						<DailyDetailCardTitle>Humidity</DailyDetailCardTitle>
-						<DailyDetailCardContent>{day.humidity}%</DailyDetailCardContent>
+						<DailyDetailCardContent>
+							{day.humidity}%
+						</DailyDetailCardContent>
 					</DailyDetailCard>
 					<DailyDetailCard>
 						<DailyDetailCardTitle>Pressure</DailyDetailCardTitle>
-						<DailyDetailCardContent>{day.pressure} hPa</DailyDetailCardContent>
+						<DailyDetailCardContent>
+							{day.pressure} hPa
+						</DailyDetailCardContent>
 					</DailyDetailCard>
 					<DailyDetailCard>
 						<DailyDetailCardTitle>Wind</DailyDetailCardTitle>
@@ -148,45 +161,55 @@ const DailyDetail = ({ pathId }) => {
 						<tr>
 							<td>Morning</td>
 							<td className='number'>{Math.round(day.temp.morn)}</td>
-							<td className='number'>{Math.round(day.feels_like.morn)}</td>
+							<td className='number'>
+								{Math.round(day.feels_like.morn)}
+							</td>
 						</tr>
 						<tr>
 							<td>Day</td>
 							<td className='number'>{Math.round(day.temp.day)}</td>
-							<td className='number'>{Math.round(day.feels_like.day)}</td>
+							<td className='number'>
+								{Math.round(day.feels_like.day)}
+							</td>
 						</tr>
 						<tr>
 							<td>Evening</td>
 							<td className='number'>{Math.round(day.temp.eve)}</td>
-							<td className='number'>{Math.round(day.feels_like.eve)}</td>
+							<td className='number'>
+								{Math.round(day.feels_like.eve)}
+							</td>
 						</tr>
 
 						<tr>
 							<td>Night</td>
 							<td className='number'>{Math.round(day.temp.night)}</td>
-							<td className='number'>{Math.round(day.feels_like.night)}</td>
+							<td className='number'>
+								{Math.round(day.feels_like.night)}
+							</td>
 						</tr>
 					</tbody>
 				</DailyDetailTempTable>
 
 				<DailyFooter>
-					<DailyDetailNavPrev>
+					<DailyDetailNav>
 						{index > 0 && (
 							<Link to={`/daily/${day.dt - 86400}`}>
-								<FiChevronsLeft />
+								<FiChevronsLeft size={22} />
+								<VisuallyHidden>Previous Day</VisuallyHidden>
 							</Link>
 						)}
-					</DailyDetailNavPrev>
-					<DailyDetailNavNext>
+					</DailyDetailNav>
+					<DailyDetailNav>
 						{index < 7 && (
 							<Link to={`/daily/${day.dt + 86400}`}>
-								<FiChevronsRight />
+								<VisuallyHidden>Next Day</VisuallyHidden>
+								<FiChevronsRight size={22} />
 							</Link>
 						)}
-					</DailyDetailNavNext>
+					</DailyDetailNav>
 				</DailyFooter>
 			</DayDetail>
-		</ModalBackdrop>
+		</Modal>
 	);
 };
 
@@ -194,7 +217,7 @@ export default DailyDetail;
 
 const DayDetail = styled.div`
 	max-width: 380px;
-	width: 90%;
+	width: 100%;
 	max-height: 95%;
 	padding: 1rem;
 	position: absolute;
@@ -223,8 +246,13 @@ const DailyFooter = styled.div`
 	justify-content: space-between;
 `;
 
-const DailyDetailNavPrev = styled.div``;
-const DailyDetailNavNext = styled.div``;
+const DailyDetailNav = styled.div`
+	a {
+		display: flex;
+		align-items: center;
+		padding: 0.25rem;
+	}
+`;
 
 const DailyDetailMain = styled.div`
 	display: flex;

@@ -26,10 +26,16 @@ export default function Home() {
 	return (
 		<StyledHome>
 			{pathDiv === 'daily' && pathId && (
-				<DailyDetail pathId={pathId} />
+				<DailyDetail
+					openModal={pathDiv === 'daily' && pathId}
+					pathId={pathId}
+				/>
 			)}
 			{pathDiv === 'hourly' && pathId && (
-				<HourlyDetail pathId={pathId} />
+				<HourlyDetail
+					openModal={pathDiv === 'hourly' && pathId}
+					pathId={pathId}
+				/>
 			)}
 
 			<Header />
