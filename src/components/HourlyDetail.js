@@ -88,21 +88,29 @@ const HourlyDetail = ({ pathId }) => {
 					</HourlyDetailCard>
 					<HourlyDetailCard>
 						<HourlyDetailCardTitle>Cloudiness</HourlyDetailCardTitle>
-						<HourlyDetailCardContent>{hour.clouds}%</HourlyDetailCardContent>
+						<HourlyDetailCardContent>
+							{hour.clouds}%
+						</HourlyDetailCardContent>
 					</HourlyDetailCard>
 					<HourlyDetailCard>
 						<HourlyDetailCardTitle>UV Index</HourlyDetailCardTitle>
-						<HourlyDetailCardContent>{hour.uvi}</HourlyDetailCardContent>
+						<HourlyDetailCardContent>
+							{hour.uvi}
+						</HourlyDetailCardContent>
 					</HourlyDetailCard>
 					<HourlyDetailCard>
-						<HourlyDetailCardTitle>Probability of Rain</HourlyDetailCardTitle>
+						<HourlyDetailCardTitle>
+							Probability of Rain
+						</HourlyDetailCardTitle>
 						<HourlyDetailCardContent>
 							{(hour.pop * 100).toFixed(0)}%
 						</HourlyDetailCardContent>
 					</HourlyDetailCard>
 					<HourlyDetailCard>
 						<HourlyDetailCardTitle>Humidity</HourlyDetailCardTitle>
-						<HourlyDetailCardContent>{hour.humidity}%</HourlyDetailCardContent>
+						<HourlyDetailCardContent>
+							{hour.humidity}%
+						</HourlyDetailCardContent>
 					</HourlyDetailCard>
 					<HourlyDetailCard>
 						<HourlyDetailCardTitle>Pressure</HourlyDetailCardTitle>
