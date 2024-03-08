@@ -1,23 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import ErrorMessage from '../components/ErrorMessage';
+import { useWeather } from '../context/WeatherContext';
 import Header from '../components/Header';
 import Search from '../components/Search';
-import { useWeather } from '../context/WeatherContext';
-import Currently from '../components/Currently';
-import Hourly from '../components/Hourly';
-import Daily from '../components/Daily';
-import Minutely from '../components/Minutely';
 import DailyDetail from '../components/DailyDetail';
 import HourlyDetail from '../components/HourlyDetail';
-import Loading from '../components/Loading';
-import ModalOptions from '../components/ModalOptions';
+import Results from '../components/Results';
 
 export default function Home() {
 	const [showSearch, setShowSearch] = useState(true);
 	const { weatherState } = useWeather();
-	const { status, weather, error } = weatherState;
+	const { status, weather } = weatherState;
 
 	const location = useLocation();
 	const pathId = location.pathname.split('/')[2];
@@ -40,27 +34,13 @@ export default function Home() {
 
 			<Header />
 			<Search showSearch={showSearch} />
-			<Results>
-				{status === 'loading' && <Loading />}
-				{status === 'rejected' && error && (
-					<ErrorMessage error={error} />
-				)}
-				{status === 'resolved' && weather && (
-					<>
-						<ModalOptions />
-						<Currently />
-						<Hourly />
-						<Daily />
-						<Minutely />
-					</>
-				)}
-			</Results>
+			<Results />
 		</StyledHome>
 	);
 }
 
 const StyledHome = styled.div`
-	width: 420px;
+	width: 430px;
 	height: 100%;
 	padding: 20px;
 	display: flex;
@@ -74,13 +54,4 @@ const StyledHome = styled.div`
 	);
 	overflow-y: scroll;
 	position: relative;
-`;
-
-const Results = styled.div`
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
 `;
